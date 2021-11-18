@@ -26,4 +26,47 @@ function putQuizzes(answer) {
 
 }
 
+
+
+
+function basicInformationsQuizz() {
+    const quizzTitle = document.getElementById("quizzTitle").value
+    const urlImgQuizz = document.getElementById("urlImgQuizz").value
+    const numberOfQuestions = document.getElementById("numberOfQuestions").value
+    const numberOfLevel = document.getElementById("numberOfLevel").value
+
+
+    if (quizzTitle.length <= 65 && quizzTitle.length >= 20 && numberOfQuestions >= 3 && numberOfLevel >= 2 && urlImgQuizz.indexOf("https://") == 0) {
+        document.querySelector(".basic-information-quizz").classList.add("display-none")
+        createQuestions(numberOfQuestions, numberOfLevel)
+    } else {
+        document.querySelector(".informations-input").classList.add("validate")
+        if (!(quizzTitle.length <= 65 && quizzTitle.length >= 20)) {
+            document.getElementById("titleError").classList.remove("display-none")
+
+        } else {
+            document.getElementById("titleError").classList.add("display-none")
+        }
+        if (!(urlImgQuizz.indexOf("https://") == 0)) {
+            document.getElementById("urlError").classList.remove("display-none")
+        } else {
+            document.getElementById("urlError").classList.add("display-none")
+        }
+        if (numberOfQuestions < 3) {
+            document.getElementById("quizzNumberError").classList.remove("display-none")
+        } else {
+            document.getElementById("quizzNumberError").classList.add("display-none")
+        }
+        if (numberOfLevel < 2) {
+            document.getElementById("levelNumberError").classList.remove("display-none")
+        } else {
+            document.getElementById("levelNumberError").classList.add("display-none")
+        }
+
+    }
+}
+
+function createQuestions(numberOfQuestions, numberOfLevel) {
+
+}
 getAllQuizzes()
