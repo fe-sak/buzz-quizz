@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>BuzzQuizz</title>
 </head>
+
 <body>
-    
+    <header>
+        <h1>BuzzQuizz</h1>
+    </header>
+
+    <main>
+        <div class="create-quizz" onclick="createQuizz()">
+            <p>Você não criou nenhum quizz ainda :(</p>
+            <div class="create-quizz-button">
+                <p>Criar Quizz</p>
+            </div>
+        </div>
+
+        <h2> Todos os Quizzes</h2>
+        <div class="all-quizzes">
+
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="javascript.js"></script>
 </body>
+
 </html>
