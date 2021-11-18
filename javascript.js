@@ -13,6 +13,9 @@ function putQuizzes(answer) {
         document.querySelector(".all-quizzes").innerHTML +=
             `
         <div class="quizz" onclick="openQuizz()">
+        <div class="background">
+                    
+        </div>
             <img src="${quizzes[i].image}">
             <div class="title">
                 <p>${quizzes[i].title}</p>
