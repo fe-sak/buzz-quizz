@@ -15,6 +15,7 @@ header {
     background: #EC362D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     position: fixed;
+    top: 0;
     z-index: 3;
     display: flex;
     justify-content: center;
@@ -31,6 +32,8 @@ main {
     margin-top: 70px;
     padding-top: 7%;
     width: 74%;
+
+    position: relative;
 }
 
 .create-quizz {
@@ -110,7 +113,14 @@ main h2 {
 .quizz-container{
     width: 100vw;
     height: 100vh;
-}
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    overflow: scroll;
+    
+    display: none;
 
 .quizz-header {
     margin-top: 69px;
@@ -158,7 +168,7 @@ main h2 {
     margin-bottom: 100px;
 }
 
-.question .header {
+.question-header {
     width: 100%;
     height: 138px;
     background-color: #434CA0;
@@ -171,7 +181,7 @@ main h2 {
 
 }
 
-.question .header span {
+.question-header span {
     text-align: center;
     padding: 20px;
     font: 700 23px/26.95px roboto;
@@ -190,6 +200,10 @@ main h2 {
     justify-content: space-between;
 }
 
+.answers figure {
+    width: fit-content;
+    margin: 0;
+}
 .answers figure  img {
     width: 330px;
     height: 175px;
@@ -226,7 +240,7 @@ main h2 {
         font-size: 19px;
     }
 
-    .question .header span {
+    .question-header span {
         font-size: 19px;
     }
 
