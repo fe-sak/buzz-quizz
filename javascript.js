@@ -1,5 +1,5 @@
 function createQuizz() {
-    alert("teste")
+    document.querySelector(".quizz-creation").classList.remove("display-none")
 }
 
 function getAllQuizzes() {

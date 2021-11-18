@@ -25,9 +25,9 @@
 
 
     <main>
-        <div class="create-quizz" onclick="createQuizz()">
+        <div class="create-quizz">
             <p>Você não criou nenhum quizz ainda :(</p>
-            <div class="create-quizz-button">
+            <div class="create-quizz-button" onclick="createQuizz()">
 
                 <p>Criar Quizz</p>
             </div>
@@ -37,9 +37,25 @@
         <div class="all-quizzes">
 
         </div>
+        <div class="quizz-creation display-none">
+            <div class="basic-information-quizz">
+                <p><strong>Comece pelo começo</strong></p>
+                <div class="informations-input">
+                    <input type="text" placeholder="Título do seu quizz">
+                    <input type="text" placeholder="URL da imagem do seu quizz">
+                    <input type="text" placeholder="Quantidade de perguntas do quizz">
+                    <input type="text" placeholder="Quantidade de níveis do quizz">
+                </div>
+                <div class="proceed-to-answer">
+                    <p>Prosseguir pra criar perguntas</p>
+                </div>
+            </div>
+        </div>
 
 
-        <div class="quizz-container">
+
+
+        <div class="quizz-container display-none">
             <div class="quizz-header">
                 <span>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA?</span>
             </div>

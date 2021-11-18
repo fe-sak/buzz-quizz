@@ -6,6 +6,7 @@
     body {
         display: flex;
         justify-content: center;
+        background: #FAFAFA;
     }
     
     header {
@@ -53,7 +54,6 @@
     }
     
     .create-quizz-button {
-        margin-top: 30px;
         border: 1px dashed #EC362D;
         border-radius: 50px;
         width: 136px;
@@ -88,7 +88,7 @@
         position: absolute;
         z-index: 1;
         left: 18px;
-        top: 120px;
+        top: 110px;
         max-width: 301px;
         color: #FFFFFF;
         font-size: 19px;
@@ -116,9 +116,7 @@
         top: 0;
         left: 0;
         overflow: scroll;
-
         z-index: 2;
-
         background-color: white;
     }
     
@@ -200,6 +198,70 @@
         font: 700 20px/23.44px roboto;
     }
     
+    .quizz-creation {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        padding-top: 100px;
+        font-size: 23px;
+        line-height: 27px;
+        background: #FAFAFA;
+    }
+    
+    .basic-information-quizz {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    
+    .informations-input {
+        width: 600px;
+        height: 256px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .quizz-creation input {
+        border-radius: 5px;
+        height: 46px;
+        width: 95%;
+        margin-bottom: 9px;
+        font-size: 19px;
+        line-height: 22px;
+        border: 1px solid #D1D1D1;
+        padding-left: 22px;
+    }
+    
+    .quizz-creation input::placeholder {
+        color: #BABABA;
+    }
+    
+    .proceed-to-answer {
+        background: #EC362D;
+        border-radius: 15px;
+        height: 54px;
+        width: 370px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 85px;
+    }
+    
+    .proceed-to-answer {
+        color: #FFF5F4;
+    }
+    
+    .display-none {
+        display: none;
+    }
+    
     @media (max-width: 689px) {
         .questions {
             width: 100vw;
@@ -225,9 +287,6 @@
         .answers figure figcaption {
             font-size: 13px;
         }
-    }
-    
-    @media (max-width:408px) {
         main {
             width: 100%;
             display: flex;
@@ -247,5 +306,16 @@
         }
         .quizz {
             margin: 0 0 12px 0;
+        }
+        .quizz-creation {
+            font-size: 20px;
+            line-height: 23px;
+        }
+        .informations-input {
+            width: 100%;
+        }
+        .proceed-to-answer {
+            margin-top: 30px;
+            width: 324px;
         }
     }
