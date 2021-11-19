@@ -43,36 +43,20 @@
                 <div class="informations-input">
                     <input type="text" placeholder="Título do seu quizz" minlength="20" maxlength="65" id="quizzTitle">
                     <p id="titleError" class="display-none">Título deve ter no mínimo 20 e no máximo 65 caracteres</p>
-                    <input type="url" pattern="https://.*" placeholder="URL da imagem do seu quizz" id="urlImgQuizz"
-                        required>
+                    <input type="url" pattern="https://.*" placeholder="URL da imagem do seu quizz" id="urlImgQuizz" required>
                     <p id="urlError" class="display-none">O valor informado não é uma URL válida</p>
                     <input type="number" placeholder="Quantidade de perguntas do quizz" min="3" id="numberOfQuestions">
                     <p id="quizzNumberError" class="display-none">O quizz deve ter no mínimo 3 perguntas</p>
                     <input type="number" placeholder="Quantidade de níveis do quizz" min="2" id="numberOfLevel">
                     <p id="levelNumberError" class="display-none">O quizz deve ter no mínimo 2 níveis</p>
                 </div>
-                <div class="proceed-to-answer" onclick="basicInformationsQuizz()">
+                <div class="proceed-button" onclick="basicInformationsQuizz()">
                     <p>Prosseguir pra criar perguntas</p>
                 </div>
             </div>
             <div class="quizz-questions display-none">
                 <p><strong>Crie suas perguntas</strong></p>
-                <div class="informations-input">
-                    <h2>Pergunta ${i}</h2>
-                    <input type="text" placeholder="Texto da pergunta">
-                    <input type="color">
-                    <h2>Resposta correta</h2>
-                    <input type="text" placeholder="Resposta correta">
-                    <input type="text" placeholder="URL da imagem">
-                    <h2>Respostas incorretas</h2>
-                    <input type="text" placeholder="Resposta incorreta ${i}">
-                    <input class="url-img" type="text" placeholder="URL da imagem ${i}">
-                    <input type="text" placeholder="Resposta incorreta ${i}">
-                    <input class="url-img" type="text" placeholder="URL da imagem ${i}">
-                    <input type="text" placeholder="Resposta incorreta ${i}">
-                    <input class="url-img" type="text" placeholder="URL da imagem ${i}">
 
-                </div>
             </div>
 
 
@@ -86,6 +70,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="javascript.js"></script>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 </body>
 
 </html>

@@ -230,23 +230,18 @@ figure.answered.true figcaption {
 .quizz-result-header {
     background-color: #EC362D;
     color: white;
-
     font: 700 23px roboto;
     word-break: break-word;
     text-align: center;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 100%;
     height: 99px;
 }
 
-
 .quizz-result-content {
     margin: 18px 0 79px 0;
-
     display: flex;
 }
 
@@ -259,7 +254,6 @@ figure.answered.true figcaption {
 .quizz-result-content span {
     width: 50%;
     padding: 20px;
-
     font: 700 19px/25px roboto;
     color: #484848;
     ;
@@ -268,7 +262,6 @@ figure.answered.true figcaption {
 .quizz-result button {
     display: block;
     margin: 0 auto 30px auto;
-
     border: none;
 }
 
@@ -276,44 +269,31 @@ figure.answered.true figcaption {
     display: block;
     width: 260px;
     aspect-ratio: 5.007;
-
     border: none;
     border-radius: 15px;
-
     background-color: #EC362D;
-
-    
     font: 400 21px roboto;
     text-align: center;
     color: #FFF5F4;
-
-
 }
 
 .quizz-result button:last-of-type {
     display: block;
-
     border: none;
-
     background-color: none;
-
     font: 400 21px roboto;
     text-align: center;
-
     color: #818181;
 }
 
 .loading-screen {
     width: 100vw;
     height: 100vh;
-
     position: fixed;
     top: 0;
     left: 0;
-
     z-index: 10;
     background-color: white;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -322,13 +302,11 @@ figure.answered.true figcaption {
 .loading-screen img {
     width: 10%;
     aspect-ratio: 1;
-
     border-radius: 100%;
-
     animation-name: spin;
     animation-duration: 5000ms;
     animation-iteration-count: infinite;
-    animation-timing-function: linear; 
+    animation-timing-function: linear;
 }
 
 @keyframes spin {
@@ -351,6 +329,7 @@ figure.answered.true figcaption {
     font-size: 23px;
     line-height: 27px;
     background: #FAFAFA;
+    overflow: scroll;
 }
 
 .basic-information-quizz {
@@ -359,7 +338,8 @@ figure.answered.true figcaption {
     flex-direction: column;
 }
 
-.informations-input {
+.informations-input,
+.informations-input .questions-informations {
     width: 600px;
     min-height: 256px;
     background: #FFFFFF;
@@ -369,13 +349,18 @@ figure.answered.true figcaption {
     justify-content: center;
     align-items: center;
     padding-bottom: 9px;
+    margin-bottom: 24px;
+}
+
+.informations-input .questions-informations {
+    box-shadow: none;
 }
 
 .quizz-creation input::placeholder {
     color: #BABABA;
 }
 
-.proceed-to-answer {
+.proceed-button {
     background: #EC362D;
     border-radius: 15px;
     height: 54px;
@@ -383,10 +368,7 @@ figure.answered.true figcaption {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 85px;
-}
-
-.proceed-to-answer {
+    margin-top: 60px;
     color: #FFF5F4;
 }
 
@@ -438,11 +420,23 @@ figure.answered.true figcaption {
     line-height: 23px;
 }
 
-.informations-input h2 {
+.close-questions,
+.informations-input div h2 {
     width: 95%;
     text-align: start;
     font-size: 20px;
     line-height: 23px;
+}
+
+.close-questions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-icon {
+    margin-top: 12px;
+    font-size: 25px;
 }
 
 .quizz-creation input::placeholder {
@@ -451,6 +445,16 @@ figure.answered.true figcaption {
 
 .url-img {
     margin-bottom: 32px;
+}
+
+.url-img:last-child {
+    margin-bottom: 0px;
+}
+
+.close {
+    min-height: auto;
+    height: 74px;
+    overflow: hidden;
 }
 
 .display-none {
@@ -462,39 +466,27 @@ figure.answered.true figcaption {
         width: 100vw;
         padding: 200px 10px 0 10px;
     }
-    
     .answers {
         gap: 10px;
     }
-
     .answers figure {
         width: 48%;
         margin-bottom: 25px;
     }
-
-
     .answers figure img {
         width: 100%;
         height: auto;
         aspect-ratio: 1.8968;
     }
-    
-
-
     .answers figure figcaption {
         font-size: 13px;
     }
-
     main {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: start;
-    }
-    main h2 {
-        padding-left: 6%;
-        width: 100%;
     }
     .create-quizz {
         width: 90%;
@@ -505,24 +497,9 @@ figure.answered.true figcaption {
     .quizz {
         margin: 0 0 12px 0;
     }
-    .proceed-to-answer {
-        background: #EC362D;
-        border-radius: 15px;
-        height: 54px;
-        width: 370px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 85px;
-        width: 100%;
-    }
-    .proceed-to-answer {
-        color: #FFF5F4;
-    }
     .display-none {
         display: none;
     }
-
     .answers figure {
         width: 48%;
         height: fit-content;
@@ -551,10 +528,6 @@ figure.answered.true figcaption {
         align-items: center;
         text-align: start;
     }
-    main h2 {
-        padding-left: 6%;
-        width: 100%;
-    }
     .create-quizz {
         width: 90%;
     }
@@ -568,24 +541,21 @@ figure.answered.true figcaption {
         font-size: 20px;
         line-height: 23px;
     }
+    .informations-input .questions-informations,
     .informations-input {
         width: 100%;
     }
-    .proceed-to-answer {
+    .proceed-button {
         margin-top: 30px;
         width: 324px;
     }
-    
 }
 
 @media (max-width: 590px) {
-
     .quizz-header span {
         font-size: 19px;
     }
-
     .question-header span {
         font-size: 19px;
     }
-
 }

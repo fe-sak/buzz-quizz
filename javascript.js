@@ -68,7 +68,49 @@ function basicInformationsQuizz() {
 }
 
 function createQuestions(numberOfQuestions, numberOfLevel) {
+    const quizzQuestions = document.querySelector(".quizz-questions");
 
+    for (let i = 1; i <= numberOfQuestions; i++) {
+        quizzQuestions.innerHTML +=
+            `
+        <div class="informations-input">
+            <div class="close-questions" onclick="toggleInformations(this)">
+                <h2>Pergunta ${i}</h2>
+                <ion-icon name="create-outline" class="display-none"></ion-icon>
+            </div>
+            <div class="questions-informations">
+                <input type="text" placeholder="Texto da pergunta">
+                <input type="text" placeholder="Cor de fundo da pergunta">
+                <h2>Resposta correta</h2>
+                <input type="text" placeholder="Resposta correta">
+                <input type="text" placeholder="URL da imagem">
+                <h2>Respostas incorretas</h2>
+                <input type="text" placeholder="Resposta incorreta 1">
+                <input class="url-img" type="text" placeholder="URL da imagem 1">
+                <input type="text" placeholder="Resposta incorreta 2">
+                <input class="url-img" type="text" placeholder="URL da imagem 2">
+                <input type="text" placeholder="Resposta incorreta 3">
+                <input class="url-img" type="text" placeholder="URL da imagem 3">
+            </div>  
+        </div>
+        `
+    }
+    quizzQuestions.innerHTML +=
+        `
+    <div class="proceed-button" onclick="levelCreation()">
+        <p>Prosseguir pra criar níveis</p>
+    </div>
+    `
+}
+
+
+function toggleInformations(information) {
+    document.querySelector(".questions-informations").toggle("display-none");
+    information.classList.toggle("close");
+}
+
+function levelCreation() {
+    alert("teste")
 }
 
 getAllQuizzes()
