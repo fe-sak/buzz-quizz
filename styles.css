@@ -238,6 +238,7 @@ figure.answered.true figcaption {
     align-items: center;
     width: 100%;
     height: 99px;
+    padding: 0 10px;
 }
 
 .quizz-result-content {
@@ -497,9 +498,6 @@ ion-icon {
     .quizz {
         margin: 0 0 12px 0;
     }
-    .display-none {
-        display: none;
-    }
     .answers figure {
         width: 48%;
         height: fit-content;
@@ -551,11 +549,29 @@ ion-icon {
     }
 }
 
+@media (max-width: 689px) {
+    .quizz-result {
+        width: 100vw;
+        padding: 0 10px;
+    }
+}
+
 @media (max-width: 590px) {
     .quizz-header span {
         font-size: 19px;
     }
     .question-header span {
         font-size: 19px;
+    }
+    .quizz-result-header {
+        font-size: 18px;
+    }
+    .quizz-result-content img {
+        width: 50%;
+        aspect-ratio: none;
+    }
+    .quizz-result-content span {
+        font-size: 15px;
+        width: 50%;
     }
 }
