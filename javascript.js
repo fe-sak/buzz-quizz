@@ -79,9 +79,15 @@ let globalSelectedQuizzId = 0;
 
 function openQuizz(selectedQuizzId) {
     correctAnswers = 0;
+
+    document.querySelector(".loading-screen").classList.remove("display-none");
+
     globalSelectedQuizzId = selectedQuizzId;
     axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${selectedQuizzId}`)
         .then((quizz) => {
+
+            document.querySelector(".loading-screen").classList.add("display-none");
+
             globalSelectedQuizz = quizz;
             console.log(quizz);
 

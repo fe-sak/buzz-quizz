@@ -301,8 +301,43 @@ figure.answered.true figcaption {
     text-align: center;
 
     color: #818181;
+}
 
+.loading-screen {
+    width: 100vw;
+    height: 100vh;
 
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 10;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-screen img {
+    width: 10%;
+    aspect-ratio: 1;
+
+    border-radius: 100%;
+
+    animation-name: spin;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .quizz-creation {
