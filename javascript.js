@@ -92,25 +92,25 @@ function openQuizz(selectedQuizzId) {
                 answers.sort(() => { return Math.random() - 0.5; });
 
                 let question = `
-                        <div class="question">
+                        <div class="question" data-identifier="question">
                             <div class="question-header">
                                 <span>${quizz.data.questions[i].title}</span>
                             </div>
                             
                             <div class="answers">
-                                <figure class="${answers[0].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[0].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
                                     <img src="${answers[0].image}">
                                     <figcaption>${answers[0].text}</figcaption>
                                 </figure>
-                                <figure class="${answers[1].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[1].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
                                     <img src="${answers[1].image}">
                                     <figcaption>${answers[1].text}</figcaption>
                                 </figure>
-                                <figure class="${answers[2].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[2].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
                                     <img src="${answers[2].image}">
                                     <figcaption>${answers[2].text}</figcaption>
                                 </figure>
-                                <figure class="${answers[3].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[3].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
                                     <img src="${answers[3].image}">
                                     <figcaption>${answers[3].text}</figcaption>
                                 </figure>
@@ -173,9 +173,9 @@ function endOfQuizz() {
 
         document.querySelector(".quizz-container").innerHTML +=
             `
-            <div class="end-of-quizz">
-            <div class="end-of-quizz-header">${Math.round(percentage)}% de acerto: ${globalSelectedQuizz.data.levels[level].title}</div>
-            <div class="end-of-quizz-content">
+            <div class="quizz-result" data-identifier="quizz-result">
+            <div class="quizz-result-header">${Math.round(percentage)}% de acerto: ${globalSelectedQuizz.data.levels[level].title}</div>
+            <div class="quizz-result-content">
                 <img src="${globalSelectedQuizz.data.levels[level].image}">
                 <span>${globalSelectedQuizz.data.levels[level].text}</span>
             </div>
@@ -184,7 +184,7 @@ function endOfQuizz() {
             <button onclick="closeQuizz()">Voltar para home</button>
             </div>`;
 
-        setTimeout(() => { document.querySelector(".end-of-quizz").scrollIntoView({ behavior: "smooth" }); }, 2000);
+        setTimeout(() => { document.querySelector(".quizz-result").scrollIntoView({ behavior: "smooth" }); }, 2000);
     }
 }
 

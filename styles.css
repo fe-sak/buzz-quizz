@@ -220,14 +220,14 @@ figure.answered.true figcaption {
     color: #009C22;
 }
 
-.end-of-quizz {
+.quizz-result {
     margin: 44px auto 0 auto;
     width: 689px;
     height: auto;
     background-color: white;
 }
 
-.end-of-quizz-header {
+.quizz-result-header {
     background-color: #EC362D;
     color: white;
 
@@ -244,19 +244,19 @@ figure.answered.true figcaption {
 }
 
 
-.end-of-quizz-content {
+.quizz-result-content {
     margin: 18px 0 79px 0;
 
     display: flex;
 }
 
-.end-of-quizz-content img {
+.quizz-result-content img {
     width: 50%;
     height: auto;
     aspect-ratio: 1.33333;
 }
 
-.end-of-quizz-content span {
+.quizz-result-content span {
     width: 50%;
     padding: 20px;
 
@@ -265,14 +265,14 @@ figure.answered.true figcaption {
     ;
 }
 
-.end-of-quizz button {
+.quizz-result button {
     display: block;
     margin: 0 auto 30px auto;
 
     border: none;
 }
 
-.end-of-quizz button:first-of-type {
+.quizz-result button:first-of-type {
     display: block;
     width: 260px;
     aspect-ratio: 5.007;
@@ -290,7 +290,7 @@ figure.answered.true figcaption {
 
 }
 
-.end-of-quizz button:last-of-type {
+.quizz-result button:last-of-type {
     display: block;
 
     border: none;
