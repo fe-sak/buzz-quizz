@@ -91,54 +91,41 @@ function openQuizz(selectedQuizzId) {
             globalSelectedQuizz = quizz;
             console.log(quizz);
 
+            document.querySelector("main").innerHTML += `<div class="quizz-container"></div>`;
+            document.querySelector(".quizz-container").innerHTML += `<div class="quizz-header"></div>`;
+            document.querySelector(".quizz-header").innerHTML +=
+                `   <span>${quizz.data.title}</span>
+                    <img src="${quizz.data.image}">`;
+
+            document.querySelector(".quizz-container").innerHTML += `<div class="quizz-header-background"></div>`;
+            document.querySelector(".quizz-container").innerHTML += `<<div class="questions"></div>`;
+
+
             let questions = "";
             for (let i = 0; i < quizz.data.questions.length; i++) {
                 let answers = quizz.data.questions[i].answers;
 
                 answers.sort(() => { return Math.random() - 0.5; });
 
-                let question = `
+                document.querySelector(".questions").innerHTML +=
+                    `
                         <div class="question" data-identifier="question">
                             <div class="question-header">
                                 <span>${quizz.data.questions[i].title}</span>
                             </div>
-                            
-                            <div class="answers">
-                                <figure class="${answers[0].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
-                                    <img src="${answers[0].image}">
-                                    <figcaption>${answers[0].text}</figcaption>
-                                </figure>
-                                <figure class="${answers[1].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
-                                    <img src="${answers[1].image}">
-                                    <figcaption>${answers[1].text}</figcaption>
-                                </figure>
-                                <figure class="${answers[2].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
-                                    <img src="${answers[2].image}">
-                                    <figcaption>${answers[2].text}</figcaption>
-                                </figure>
-                                <figure class="${answers[3].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
-                                    <img src="${answers[3].image}">
-                                    <figcaption>${answers[3].text}</figcaption>
-                                </figure>
-                            </div>
+                            <div class ="answers"></div>
                         </div>
-                        `;
-
-                questions = questions.concat(question);
+                    `;
+                for (let j = 0; j < answers.length; j++) {
+                    document.querySelector(".question:last-of-type .answers").innerHTML +=
+                        `
+                            <figure class="${answers[j].isCorrectAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
+                                <img src="${answers[j].image}">
+                                <figcaption>${answers[j].text}</figcaption>
+                            </figure>
+                        `
+                }
             }
-
-            document.querySelector("main").innerHTML +=
-                `
-                <div class="quizz-container">
-                    <div class="quizz-header">
-                        <span>${quizz.data.title}</span>
-                        <img src="${quizz.data.image}">
-                        </div>
-                    <div class="quizz-header-background"></div>
-                    <div class="questions">
-                    ${questions}
-                    </div>
-                </div>`;
 
         });
 }
