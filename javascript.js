@@ -26,6 +26,51 @@ function putQuizzes(answer) {
 
 }
 
+
+
+
+function basicInformationsQuizz() {
+    const quizzTitle = document.getElementById("quizzTitle").value
+    const urlImgQuizz = document.getElementById("urlImgQuizz").value
+    const numberOfQuestions = document.getElementById("numberOfQuestions").value
+    const numberOfLevel = document.getElementById("numberOfLevel").value
+
+
+    if (quizzTitle.length <= 65 && quizzTitle.length >= 20 && numberOfQuestions >= 3 && numberOfLevel >= 2 && urlImgQuizz.indexOf("https://") == 0) {
+        document.querySelector(".basic-information-quizz").classList.add("display-none")
+        document.querySelector(".quizz-questions").classList.remove("display-none")
+        createQuestions(numberOfQuestions, numberOfLevel)
+    } else {
+        document.querySelector(".informations-input").classList.add("validate")
+        if (!(quizzTitle.length <= 65 && quizzTitle.length >= 20)) {
+            document.getElementById("titleError").classList.remove("display-none")
+
+        } else {
+            document.getElementById("titleError").classList.add("display-none")
+        }
+        if (!(urlImgQuizz.indexOf("https://") == 0)) {
+            document.getElementById("urlError").classList.remove("display-none")
+        } else {
+            document.getElementById("urlError").classList.add("display-none")
+        }
+        if (numberOfQuestions < 3) {
+            document.getElementById("quizzNumberError").classList.remove("display-none")
+        } else {
+            document.getElementById("quizzNumberError").classList.add("display-none")
+        }
+        if (numberOfLevel < 2) {
+            document.getElementById("levelNumberError").classList.remove("display-none")
+        } else {
+            document.getElementById("levelNumberError").classList.add("display-none")
+        }
+
+    }
+}
+
+function createQuestions(numberOfQuestions, numberOfLevel) {
+
+}
+
 getAllQuizzes()
 
 function openQuizz(selectedQuizzId) {
@@ -90,18 +135,19 @@ function openQuizz(selectedQuizzId) {
 let correctAnswers = 0;
 
 function selectAnswer(clickedAnswer) {
+    clickedAnswer.classList.add("clicked");
     if (clickedAnswer.classList.contains("true")) correctAnswers++;
     let allAnswers = clickedAnswer.parentNode.childNodes;
 
-    clickedAnswer.parentNode.parentNode.classList.add("selected");
+    clickedAnswer.parentNode.parentNode.classList.add("answered");
     for (let i = 0; i < allAnswers.length; i++) {
         if (i % 2 !== 0) {
             console.log(allAnswers[i]);
-            allAnswers[i].classList.add("selected");
+            allAnswers[i].classList.add("answered");
         }
     }
 
     setTimeout(() => {
-        document.querySelector(".question:not(.selected)").scrollIntoView({ block: "center", behavior: "smooth" });
+        document.querySelector(".question:not(.answered)").scrollIntoView({ block: "center", behavior: "smooth" });
     }, 2000)
 }
