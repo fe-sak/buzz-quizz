@@ -48,19 +48,19 @@ function openQuizz(selectedQuizzId) {
                             </div>
                             
                             <div class="answers">
-                                <figure class="answer ${answers[0].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[0].isCorrectAnswer}" onclick="selectAnswer(this)">
                                     <img src="${answers[0].image}">
                                     <figcaption>${answers[0].text}</figcaption>
                                 </figure>
-                                <figure class="answer ${answers[1].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[1].isCorrectAnswer}" onclick="selectAnswer(this)">
                                     <img src="${answers[1].image}">
                                     <figcaption>${answers[1].text}</figcaption>
                                 </figure>
-                                <figure class="answer ${answers[2].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[2].isCorrectAnswer}" onclick="selectAnswer(this)">
                                     <img src="${answers[2].image}">
                                     <figcaption>${answers[2].text}</figcaption>
                                 </figure>
-                                <figure class="answer ${answers[3].isCorrectAnswer}" onclick="selectAnswer(this)">
+                                <figure class="${answers[3].isCorrectAnswer}" onclick="selectAnswer(this)">
                                     <img src="${answers[3].image}">
                                     <figcaption>${answers[3].text}</figcaption>
                                 </figure>
