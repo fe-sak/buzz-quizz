@@ -73,9 +73,16 @@ function createQuestions(numberOfQuestions, numberOfLevel) {
 
 getAllQuizzes()
 
+let globalSelectedQuizz = {};
+
+let globalSelectedQuizzId = 0;
+
 function openQuizz(selectedQuizzId) {
+    correctAnswers = 0;
+    globalSelectedQuizzId = selectedQuizzId;
     axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${selectedQuizzId}`)
         .then((quizz) => {
+            globalSelectedQuizz = quizz;
             console.log(quizz);
 
             let questions = "";
@@ -83,8 +90,6 @@ function openQuizz(selectedQuizzId) {
                 let answers = quizz.data.questions[i].answers;
 
                 answers.sort(() => { return Math.random() - 0.5; });
-
-                console.log(answers);
 
                 let question = `
                         <div class="question">
@@ -136,13 +141,14 @@ let correctAnswers = 0;
 
 function selectAnswer(clickedAnswer) {
     clickedAnswer.classList.add("clicked");
+
     if (clickedAnswer.classList.contains("true")) correctAnswers++;
+
     let allAnswers = clickedAnswer.parentNode.childNodes;
 
     clickedAnswer.parentNode.parentNode.classList.add("answered");
     for (let i = 0; i < allAnswers.length; i++) {
         if (i % 2 !== 0) {
-            console.log(allAnswers[i]);
             allAnswers[i].classList.add("answered");
         }
     }
@@ -150,4 +156,43 @@ function selectAnswer(clickedAnswer) {
     setTimeout(() => {
         document.querySelector(".question:not(.answered)").scrollIntoView({ block: "center", behavior: "smooth" });
     }, 2000)
+
+    endOfQuizz();
+}
+
+function endOfQuizz() {
+    if (document.querySelectorAll(".clicked").length === document.querySelectorAll(".question").length) {
+        let percentage = (correctAnswers / globalSelectedQuizz.data.questions.length) * 100;
+        let level = 0;
+        for (let i = globalSelectedQuizz.data.levels.length - 1; i >= 0; i--) {
+            if (percentage > globalSelectedQuizz.data.levels[i].minValue) {
+                level = i;
+                break;
+            }
+        }
+
+        document.querySelector(".quizz-container").innerHTML +=
+            `
+            <div class="end-of-quizz">
+            <div class="end-of-quizz-header">${Math.round(percentage)}% de acerto: ${globalSelectedQuizz.data.levels[level].title}</div>
+            <div class="end-of-quizz-content">
+                <img src="${globalSelectedQuizz.data.levels[level].image}">
+                <span>${globalSelectedQuizz.data.levels[level].text}</span>
+            </div>
+            <button onclick="restartQuizz()">Reiniciar Quizz</button>
+            
+            <button onclick="closeQuizz()">Voltar para home</button>
+            </div>`;
+
+        setTimeout(() => { document.querySelector(".end-of-quizz").scrollIntoView({ behavior: "smooth" }); }, 2000);
+    }
+}
+
+function restartQuizz() {
+    document.querySelector(".quizz-container").remove();
+    openQuizz(globalSelectedQuizzId);
+}
+
+function closeQuizz() {
+    document.querySelector(".quizz-container").remove();
 }
