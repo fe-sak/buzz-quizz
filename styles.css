@@ -241,6 +241,8 @@ figure.answered.true figcaption {
 
     width: 100%;
     height: 99px;
+
+    padding: 0 10px;
 }
 
 
@@ -577,6 +579,12 @@ figure.answered.true figcaption {
     }
     
 }
+@media (max-width: 689px) {
+    .quizz-result {
+        width: 100vw;
+        padding: 0 10px;
+    }
+}
 
 @media (max-width: 590px) {
 
@@ -586,6 +594,20 @@ figure.answered.true figcaption {
 
     .question-header span {
         font-size: 19px;
+    }
+
+    .quizz-result-header {
+        font-size: 18px;
+    }
+
+    .quizz-result-content img {
+        width: 50%;
+        aspect-ratio: none;
+    }
+
+    .quizz-result-content span {
+        font-size: 15px;
+        width: 50%;
     }
 
 }

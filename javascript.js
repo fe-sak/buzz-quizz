@@ -100,8 +100,6 @@ function openQuizz(selectedQuizzId) {
             document.querySelector(".quizz-container").innerHTML += `<div class="quizz-header-background"></div>`;
             document.querySelector(".quizz-container").innerHTML += `<<div class="questions"></div>`;
 
-
-            let questions = "";
             for (let i = 0; i < quizz.data.questions.length; i++) {
                 let answers = quizz.data.questions[i].answers;
 
