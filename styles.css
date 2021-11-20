@@ -68,12 +68,12 @@ main {
     color: #EC362D;
 }
 
-main h2 {
+.all-quizzes h2, .user-quizzes h2 {
     margin: 6% 0 14px 0;
     font-size: 20px;
 }
 
-.all-quizzes {
+.all-quizzes, .user-quizzes {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -526,7 +526,7 @@ ion-icon {
         text-align: start;
     }
 
-    main h2 {
+    .all-quizzes h2, .user-quizzes h2 {
         width: 100%;
         text-align: start;
     }
@@ -538,7 +538,7 @@ ion-icon {
         width: 100%;
     }
 
-    .all-quizzes {
+    .all-quizzes, .user-quizzes {
         justify-content: center;
     }
 
@@ -573,7 +573,7 @@ ion-icon {
     .create-quizz {
         width: 90%;
     }
-    .all-quizzes {
+    .all-quizzes, .user-quizzes {
         justify-content: center;
     }
 

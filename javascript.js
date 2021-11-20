@@ -1,3 +1,4 @@
+
 function createQuizz() {
     const allInputs = document.querySelectorAll("input");
     for (let i = 0; i < allInputs.length; i++) {
@@ -15,21 +16,49 @@ function getAllQuizzes() {
 }
 
 function putQuizzes(answer) {
+    let userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
+    console.log(userCreatedQuizzId);
     document.querySelector(".loading-screen").classList.add("display-none");
+
+    if (userCreatedQuizzId.length > 0) document.querySelector(".user-quizzes").innerHTML += `<h2> Seus Quizzes</h2>`;
+    document.querySelector(".all-quizzes").innerHTML += `<h2> Todos os Quizzes</h2>`;
+
     const quizzes = answer.data
     for (let i = 0; i < quizzes.length; i++) {
-        document.querySelector(".all-quizzes").innerHTML +=
-            `
-        <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)">
-        <div class="background">
+        for (let j = 0; j < userCreatedQuizzId.length; j++) {
+            if (quizzes[i].id === userCreatedQuizzId[j]) {
+                document.querySelector(".user-quizzes").innerHTML +=
+                    `
                     
-        </div>
-            <img src="${quizzes[i].image}">
-            <div class="title">
-                <p>${quizzes[i].title}</p>
-            </div>
-        </div>
-        `
+                    <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)">
+                    <div class="background">
+                                
+                    </div>
+                        <img src="${quizzes[i].image}">
+                        <div class="title">
+                            <p>${quizzes[i].title}</p>
+                        </div>
+                    </div>
+                `
+                break;
+            }
+
+            else if (j === (userCreatedQuizzId.length - 1)) {
+                document.querySelector(".all-quizzes").innerHTML +=
+                    `
+                    
+                    <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)">
+                    <div class="background">
+                                
+                    </div>
+                        <img src="${quizzes[i].image}">
+                        <div class="title">
+                            <p>${quizzes[i].title}</p>
+                        </div>
+                    </div>
+                `
+            }
+        }
     }
 
 }
@@ -240,21 +269,22 @@ function finishQuizz(serverAnswer) {
     addUserCreatedQuizz(serverAnswer.data.id);
 }
 
+
 function addUserCreatedQuizz(id) {
-    let userCreatedQuizzes = [];
+    let userCreatedQuizzId = [];
 
 
-    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
+    userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
 
-    userCreatedQuizzes.push(id);
+    userCreatedQuizzId.push(id);
 
-    console.log(userCreatedQuizzes);
+    console.log(userCreatedQuizzId);
 
-    let stringfiedUserCreatedQuizzes = JSON.stringify(userCreatedQuizzes);
+    let stringfieduserCreatedQuizzId = JSON.stringify(userCreatedQuizzId);
 
-    console.log(stringfiedUserCreatedQuizzes);
+    console.log(stringfieduserCreatedQuizzId);
 
-    localStorage.setItem("userCreatedQuizzId", stringfiedUserCreatedQuizzes);
+    localStorage.setItem("userCreatedQuizzId", stringfieduserCreatedQuizzId);
 }
 
 function goToHome() {
@@ -270,7 +300,7 @@ let globalQuizzId = 0;
 
 function openQuizz(quizzId) {
     correctAnswers = 0;
-
+    console.log(quizzId);
     document.querySelector(".loading-screen").classList.remove("display-none");
 
     globalQuizzId = quizzId;
