@@ -226,7 +226,6 @@ main h2 {
 
 .answers figure figcaption {
     font: 700 20px/23.44px roboto;
-
     max-width: 100%;
     word-break: break-word;
 }
@@ -448,7 +447,7 @@ figure.answered.true figcaption {
 
 .close-questions,
 .informations-input div h2 {
-    width: 95%;
+    width: 96%;
     text-align: start;
     font-size: 20px;
     line-height: 23px;
@@ -458,10 +457,12 @@ figure.answered.true figcaption {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 600px;
 }
 
 ion-icon {
     margin-top: 12px;
+    padding-right: 30px;
     font-size: 25px;
 }
 
@@ -484,6 +485,10 @@ ion-icon {
     padding-left: 2%;
 }
 
+input:invalid {
+    background: #FFE9E9;
+}
+
 #teste {
     height: 180px;
 }
@@ -495,7 +500,6 @@ ion-icon {
 }
 
 @media (max-width: 1100px) {
-
     .loading-screen img {
         width: 20%;
     }
@@ -525,7 +529,6 @@ ion-icon {
         align-items: center;
         text-align: start;
     }
-
     main h2 {
         width: 100%;
         text-align: start;
@@ -533,15 +536,12 @@ ion-icon {
     .create-quizz {
         width: 90%;
     }
-
     .quizz {
         width: 100%;
     }
-
     .all-quizzes {
         justify-content: center;
     }
-
     .answers figure {
         width: 48%;
         height: fit-content;
@@ -576,7 +576,6 @@ ion-icon {
     .all-quizzes {
         justify-content: center;
     }
-
     .quizz-creation {
         font-size: 20px;
         line-height: 23px;
@@ -601,6 +600,9 @@ ion-icon {
     .quizz-finish .title {
         left: 18px;
         top: 110px;
+    }
+    .close-questions {
+        width: 96%;
     }
 }
 
