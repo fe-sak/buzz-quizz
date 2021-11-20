@@ -161,35 +161,35 @@ function sendQuizzToServer() {
     let allDoneQuizz = {
         title: document.getElementById("quizzTitle").value,
         image: document.getElementById("urlImgQuizz").value,
-        questions: {},
-        levels: {}
+        questions: [],
+        levels: []
     }
 
     for (let i = 0; i < document.getElementById("numberOfQuestions").value; i++) {
 
         allDoneQuizz.questions[i] = {
-            title: document.getElementById(`question${i+1}`).value,
-            color: document.getElementById(`questionColor${i+1}`).value,
+            title: document.getElementById(`question${i + 1}`).value,
+            color: document.getElementById(`questionColor${i + 1}`).value,
             answers: [{
-                    text: document.getElementById(`correctAnswer${i+1}`).value,
-                    image: document.getElementById(`correctAnswerimg${i+1}`).value,
-                    isCorrectAnswer: true
-                },
-                {
-                    text: document.getElementById(`wrongAnswer1${i+1}`).value,
-                    image: document.getElementById(`wrongAnswer1img${i+1}`).value,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: document.getElementById(`wrongAnswer2${i+1}`).value,
-                    image: document.getElementById(`wrongAnswer2img${i+1}`).value,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: document.getElementById(`wrongAnswer3${i+1}`).value,
-                    image: document.getElementById(`wrongAnswer3img${i+1}`).value,
-                    isCorrectAnswer: false
-                }
+                text: document.getElementById(`correctAnswer${i + 1}`).value,
+                image: document.getElementById(`correctAnswerimg${i + 1}`).value,
+                isCorrectAnswer: true
+            },
+            {
+                text: document.getElementById(`wrongAnswer1${i + 1}`).value,
+                image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
+                isCorrectAnswer: false
+            },
+            {
+                text: document.getElementById(`wrongAnswer2${i + 1}`).value,
+                image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
+                isCorrectAnswer: false
+            },
+            {
+                text: document.getElementById(`wrongAnswer3${i + 1}`).value,
+                image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
+                isCorrectAnswer: false
+            }
             ]
         }
     }
@@ -197,10 +197,10 @@ function sendQuizzToServer() {
 
     for (let i = 0; i < document.getElementById("numberOfLevel").value; i++) {
         allDoneQuizz.levels[i] = {
-            title: document.getElementById(`levelTitle${i+1}`).value,
-            image: document.getElementById(`levelimg${i+1}`).value,
-            text: document.getElementById(`levelDescription${i+1}`).value,
-            minValue: document.getElementById(`levelPercent${i+1}`).value
+            title: document.getElementById(`levelTitle${i + 1}`).value,
+            image: document.getElementById(`levelimg${i + 1}`).value,
+            text: document.getElementById(`levelDescription${i + 1}`).value,
+            minValue: document.getElementById(`levelPercent${i + 1}`).value
         }
 
 
@@ -209,7 +209,7 @@ function sendQuizzToServer() {
     document.querySelector(".loading-screen").classList.remove("display-none");
     promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
     promisse.then(finishQuizz)
-    primisse.catch(error)
+    promisse.catch(error)
 
 }
 
@@ -217,7 +217,8 @@ function error(erro) {
     console.log("o erro foi = " + erro.value)
 }
 
-function finishQuizz() {
+function finishQuizz(serverAnswer) {
+
     document.querySelector(".loading-screen").classList.add("display-none");
     document.querySelector(".quizz-levels").classList.add("display-none")
     document.querySelector(".quizz-finish").classList.remove("display-none")
@@ -235,11 +236,30 @@ function finishQuizz() {
             <p>${quizzTitle}</p>
         </div>
     </div>
-    <div class="proceed-button" onclick="accessQuizz()">
+    <div class="proceed-button" onclick="openQuizz(${serverAnswer.data.id})">
         <p>Acessar Quizz</p>
     </div>
     <p class = "go-to-home-button" onclick="goToHome()">Voltar pra home</p>
     `
+
+    addUserCreatedQuizz(serverAnswer.data.id);
+}
+
+function addUserCreatedQuizz(id) {
+    let userCreatedQuizzes = [];
+
+
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
+
+    userCreatedQuizzes.push(id);
+
+    console.log(userCreatedQuizzes);
+
+    let stringfiedUserCreatedQuizzes = JSON.stringify(userCreatedQuizzes);
+
+    console.log(stringfiedUserCreatedQuizzes);
+
+    localStorage.setItem("userCreatedQuizzId", stringfiedUserCreatedQuizzes);
 }
 
 function goToHome() {
@@ -251,15 +271,15 @@ getAllQuizzes()
 
 let globalSelectedQuizz = {};
 
-let globalSelectedQuizzId = 0;
+let globalQuizzId = 0;
 
-function openQuizz(selectedQuizzId) {
+function openQuizz(quizzId) {
     correctAnswers = 0;
 
     document.querySelector(".loading-screen").classList.remove("display-none");
 
-    globalSelectedQuizzId = selectedQuizzId;
-    axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${selectedQuizzId}`)
+    globalQuizzId = quizzId;
+    axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${quizzId}`)
         .then((quizz) => {
 
             document.querySelector(".loading-screen").classList.add("display-none");
@@ -357,7 +377,7 @@ function endOfQuizz() {
 
 function restartQuizz() {
     document.querySelector(".quizz-container").remove();
-    openQuizz(globalSelectedQuizzId);
+    openQuizz(globalQuizzId);
 }
 
 function closeQuizz() {
