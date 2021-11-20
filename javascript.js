@@ -156,35 +156,35 @@ function sendQuizzToServer() {
     let allDoneQuizz = {
         title: document.getElementById("quizzTitle").value,
         image: document.getElementById("urlImgQuizz").value,
-        questions: {},
-        levels: {}
+        questions: [],
+        levels: []
     }
 
     for (let i = 0; i < document.getElementById("numberOfQuestions").value; i++) {
 
         allDoneQuizz.questions[i] = {
-            title: document.getElementById(`question${i+1}`).value,
-            color: document.getElementById(`questionColor${i+1}`).value,
+            title: document.getElementById(`question${i + 1}`).value,
+            color: document.getElementById(`questionColor${i + 1}`).value,
             answers: [{
-                    text: document.getElementById(`correctAnswer${i+1}`).value,
-                    image: document.getElementById(`correctAnswerimg${i+1}`).value,
-                    isCorrectAnswer: true
-                },
-                {
-                    text: document.getElementById(`wrongAnswer1${i+1}`).value,
-                    image: document.getElementById(`wrongAnswer1img${i+1}`).value,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: document.getElementById(`wrongAnswer2${i+1}`).value,
-                    image: document.getElementById(`wrongAnswer2img${i+1}`).value,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: document.getElementById(`wrongAnswer3${i+1}`).value,
-                    image: document.getElementById(`wrongAnswer3img${i+1}`).value,
-                    isCorrectAnswer: false
-                }
+                text: document.getElementById(`correctAnswer${i + 1}`).value,
+                image: document.getElementById(`correctAnswerimg${i + 1}`).value,
+                isCorrectAnswer: true
+            },
+            {
+                text: document.getElementById(`wrongAnswer1${i + 1}`).value,
+                image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
+                isCorrectAnswer: false
+            },
+            {
+                text: document.getElementById(`wrongAnswer2${i + 1}`).value,
+                image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
+                isCorrectAnswer: false
+            },
+            {
+                text: document.getElementById(`wrongAnswer3${i + 1}`).value,
+                image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
+                isCorrectAnswer: false
+            }
             ]
         }
     }
@@ -192,10 +192,10 @@ function sendQuizzToServer() {
 
     for (let i = 0; i < document.getElementById("numberOfLevel").value; i++) {
         allDoneQuizz.levels[i] = {
-            title: document.getElementById(`levelTitle${i+1}`).value,
-            image: document.getElementById(`levelimg${i+1}`).value,
-            text: document.getElementById(`levelDescription${i+1}`).value,
-            minValue: document.getElementById(`levelPercent${i+1}`).value
+            title: document.getElementById(`levelTitle${i + 1}`).value,
+            image: document.getElementById(`levelimg${i + 1}`).value,
+            text: document.getElementById(`levelDescription${i + 1}`).value,
+            minValue: document.getElementById(`levelPercent${i + 1}`).value
         }
 
 
@@ -204,7 +204,7 @@ function sendQuizzToServer() {
     document.querySelector(".loading-screen").classList.remove("display-none");
     promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
     promisse.then(finishQuizz)
-    primisse.catch(error)
+    promisse.catch(error)
 
 }
 
