@@ -116,18 +116,22 @@ function createQuestions(numberOfQuestions) {
                 <ion-icon name="create-outline" class=""></ion-icon>
             </div>
             <div class="questions-informations display-none">
-                <input type="text" placeholder="Texto da pergunta" id="question${i}">
-                <input type="text" placeholder="Cor de fundo da pergunta" id="questionColor${i}">
+                <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}">
+                <p>A pergunta deve ter no mínimo 20 caracteres</p>
+                <input type="text" pattern="#+[A-Fa-f1-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}">
+                <p>A cor deve ser uma cor em hexadecimal</p>
                 <h2>Resposta correta</h2>
-                <input type="text" placeholder="Resposta correta" id="correctAnswer${i}">
-                <input type="url" placeholder="URL da imagem" id="correctAnswerimg${i}">
+                <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}">
+                <p>Resposta não pode estar em branco</p>
+                <input type="url" pattern="https://.*" placeholder="URL da imagem" id="correctAnswerimg${i}">
+                <p>O valor informado não é uma URL válida</p>
                 <h2>Respostas incorretas</h2>
-                <input type="text" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}">
-                <input class="url-img" type="url" placeholder="URL da imagem 1" id="wrongAnswer1img${i}">
+                <input type="text" minlength="1" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}">
+                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 1" id="wrongAnswer1img${i}">
                 <input type="text" placeholder="Resposta incorreta 2" id="wrongAnswer2${i}">
-                <input class="url-img" type="url" placeholder="URL da imagem 2" id="wrongAnswer2img${i}">
+                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 2" id="wrongAnswer2img${i}">
                 <input type="text" placeholder="Resposta incorreta 3" id="wrongAnswer3${i}">
-                <input class="url-img" type="url" placeholder="URL da imagem 3" id="wrongAnswer3img${i}">
+                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 3" id="wrongAnswer3img${i}">
             </div>  
         </div>
         `
@@ -139,6 +143,7 @@ function createQuestions(numberOfQuestions) {
     </div>
     `
 }
+
 
 
 function toggleInformations(information) {
@@ -164,10 +169,10 @@ function levelCreation() {
                 <ion-icon name="create-outline" class=""></ion-icon>
             </div>
             <div class="levels-informations display-none">
-                <input type="text" placeholder="Título do nível" id="levelTitle${i}">
-                <input type="text" placeholder="% de acerto mínima" id="levelPercent${i}">
-                <input class="url-img" type="url" placeholder="URL da imagem do nível" id="levelimg${i}">
-                <input type="text" placeholder="Descrição do nível" id="levelDescription${i}">
+                <input type="text" minlength="10" placeholder="Título do nível" id="levelTitle${i}">
+                <input type="text" pattern="^[1-9]?[0-9]{1}$|^100$" placeholder="% de acerto mínima" id="levelPercent${i}">
+                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem do nível" id="levelimg${i}">
+                <input type="text" minlength="30" placeholder="Descrição do nível" id="levelDescription${i}">
             </div>  
         </div>
     
@@ -409,3 +414,5 @@ function closeQuizz() {
     document.querySelector(".quizz-container").remove();
 
 }
+
+//inputElement.checkValidity() returns true or false
