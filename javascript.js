@@ -212,7 +212,8 @@ function error(erro) {
     console.log("o erro foi = " + erro.value)
 }
 
-function finishQuizz() {
+function finishQuizz(serverAnswer) {
+
     document.querySelector(".loading-screen").classList.add("display-none");
     document.querySelector(".quizz-levels").classList.add("display-none")
     document.querySelector(".quizz-finish").classList.remove("display-none")
@@ -230,11 +231,30 @@ function finishQuizz() {
             <p>${quizzTitle}</p>
         </div>
     </div>
-    <div class="proceed-button" onclick="accessQuizz()">
+    <div class="proceed-button" onclick="openQuizz(${serverAnswer.data.id})">
         <p>Acessar Quizz</p>
     </div>
     <p class = "go-to-home-button" onclick="goToHome()">Voltar pra home</p>
     `
+
+    addUserCreatedQuizz(serverAnswer.data.id);
+}
+
+function addUserCreatedQuizz(id) {
+    let userCreatedQuizzes = [];
+
+
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
+
+    userCreatedQuizzes.push(id);
+
+    console.log(userCreatedQuizzes);
+
+    let stringfiedUserCreatedQuizzes = JSON.stringify(userCreatedQuizzes);
+
+    console.log(stringfiedUserCreatedQuizzes);
+
+    localStorage.setItem("userCreatedQuizzId", stringfiedUserCreatedQuizzes);
 }
 
 function goToHome() {
@@ -246,15 +266,15 @@ getAllQuizzes()
 
 let globalSelectedQuizz = {};
 
-let globalSelectedQuizzId = 0;
+let globalQuizzId = 0;
 
-function openQuizz(selectedQuizzId) {
+function openQuizz(quizzId) {
     correctAnswers = 0;
 
     document.querySelector(".loading-screen").classList.remove("display-none");
 
-    globalSelectedQuizzId = selectedQuizzId;
-    axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${selectedQuizzId}`)
+    globalQuizzId = quizzId;
+    axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${quizzId}`)
         .then((quizz) => {
 
             document.querySelector(".loading-screen").classList.add("display-none");
@@ -352,7 +372,7 @@ function endOfQuizz() {
 
 function restartQuizz() {
     document.querySelector(".quizz-container").remove();
-    openQuizz(globalSelectedQuizzId);
+    openQuizz(globalQuizzId);
 }
 
 function closeQuizz() {
