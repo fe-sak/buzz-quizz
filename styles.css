@@ -264,7 +264,7 @@ figure.answered.true figcaption {
     padding: 20px;
     font: 700 19px/25px roboto;
     color: #484848;
-    ;
+    word-break: break-word;
 }
 
 .quizz-result button {
