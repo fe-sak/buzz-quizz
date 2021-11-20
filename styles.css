@@ -61,6 +61,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .create-quizz-button p {
@@ -84,6 +85,7 @@ main h2 {
     margin-bottom: 30px;
     width: 30%;
     aspect-ratio: 1.87845304;
+    cursor: pointer;
 }
 
 .title {
@@ -194,6 +196,7 @@ main h2 {
 .answers figure {
     width: 48%;
     margin: 0;
+    cursor: pointer;
 }
 
 .answers figure img {
@@ -268,6 +271,7 @@ figure.answered.true figcaption {
     display: block;
     margin: 0 auto 30px auto;
     border: none;
+    cursor: pointer;
 }
 
 .quizz-result button:first-of-type {
