@@ -487,6 +487,11 @@ ion-icon {
         align-items: center;
         text-align: start;
     }
+
+    main h2 {
+        width: 100%;
+        text-align: start;
+    }
     .create-quizz {
         width: 90%;
     }
