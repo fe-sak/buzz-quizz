@@ -16,7 +16,7 @@ function getAllQuizzes() {
 
 function putQuizzes(answer) {
     // let userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));  
-    let userCreatedQuizzId = [0];
+    let userCreatedQuizzId = [-1];
     console.log(userCreatedQuizzId);
     document.querySelector(".loading-screen").classList.add("display-none");
 
