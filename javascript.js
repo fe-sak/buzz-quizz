@@ -1,4 +1,5 @@
-if (localStorage.getItem("userCreatedQuizzId") === null) localStorage.setItem("userCreatedQuizzId", JSON.stringify([]));
+if (JSON.parse(localStorage.getItem("userCreatedQuizzId")) === null) localStorage.setItem("userCreatedQuizzId", JSON.stringify([]));
+
 function createQuizz() {
     const allInputs = document.querySelectorAll("input");
     for (let i = 0; i < allInputs.length; i++) {
