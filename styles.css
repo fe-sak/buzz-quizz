@@ -84,6 +84,11 @@ main h2 {
     height: 181px;
 }
 
+.quizz-finish .quizz {
+    display: flex;
+    justify-content: center;
+}
+
 .title {
     position: absolute;
     z-index: 1;
@@ -95,6 +100,11 @@ main h2 {
     line-height: 22px;
 }
 
+.quizz-finish .title {
+    left: -50px;
+    top: 200px;
+}
+
 .quizz img {
     width: 340px;
     height: 181px;
@@ -102,11 +112,21 @@ main h2 {
     margin-bottom: 12px;
 }
 
+.quizz-finish .quizz img {
+    min-width: 500px;
+    height: 270px;
+}
+
 .background {
     width: 340px;
     height: 181px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
     position: absolute;
+}
+
+.quizz-finish .background {
+    width: 500px;
+    height: 270px;
 }
 
 .quizz-container {
@@ -288,8 +308,8 @@ figure.answered.true figcaption {
 }
 
 .loading-screen {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -340,7 +360,8 @@ figure.answered.true figcaption {
 }
 
 .informations-input,
-.informations-input .questions-informations {
+.informations-input .questions-informations,
+.informations-input .levels-informations {
     width: 600px;
     min-height: 256px;
     background: #FFFFFF;
@@ -357,8 +378,8 @@ figure.answered.true figcaption {
     box-shadow: none;
 }
 
-.quizz-creation input::placeholder {
-    color: #BABABA;
+.informations-input .questions-informations h2 {
+    padding-left: 2%;
 }
 
 .proceed-button {
@@ -369,8 +390,12 @@ figure.answered.true figcaption {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 60px;
+    margin: 60px 0 30px 0;
     color: #FFF5F4;
+}
+
+.quizz-finish .proceed-button {
+    margin-top: 10%;
 }
 
 .informations-input p {
@@ -412,6 +437,8 @@ figure.answered.true figcaption {
     background: #FAFAFA;
 }
 
+.quizz-finish,
+.quizz-levels,
 .quizz-questions,
 .basic-information-quizz {
     display: flex;
@@ -456,9 +483,16 @@ ion-icon {
     min-height: auto;
     height: 74px;
     overflow: hidden;
+    padding-left: 2%;
 }
 
-.display-none {
+#teste {
+    height: 180px;
+}
+
+.display-none,
+.display-none.levels-informations,
+.display-none.questions-informations {
     display: none;
 }
 
@@ -539,13 +573,26 @@ ion-icon {
         font-size: 20px;
         line-height: 23px;
     }
+    .informations-input .levels-informations,
     .informations-input .questions-informations,
     .informations-input {
         width: 100%;
     }
     .proceed-button {
-        margin-top: 30px;
+        margin: 30px 0 30px 0;
         width: 324px;
+    }
+    .quizz-finish .quizz img {
+        min-width: 340px;
+        height: 181px;
+    }
+    .quizz-finish .background {
+        width: 340px;
+        height: 181px;
+    }
+    .quizz-finish .title {
+        left: 18px;
+        top: 110px;
     }
 }
 

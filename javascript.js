@@ -1,13 +1,21 @@
 function createQuizz() {
+    const allInputs = document.querySelectorAll("input");
+    for (let i = 0; i < allInputs.length; i++) {
+        allInputs[i].value = ""
+    }
     document.querySelector(".quizz-creation").classList.remove("display-none")
+    document.querySelector(".basic-information-quizz").classList.remove("display-none")
+
 }
 
 function getAllQuizzes() {
     const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
+    document.querySelector(".loading-screen").classList.remove("display-none");
     promisse.then(putQuizzes);
 }
 
 function putQuizzes(answer) {
+    document.querySelector(".loading-screen").classList.add("display-none");
     const quizzes = answer.data
     for (let i = 0; i < quizzes.length; i++) {
         document.querySelector(".all-quizzes").innerHTML +=
@@ -39,7 +47,7 @@ function basicInformationsQuizz() {
     if (quizzTitle.length <= 65 && quizzTitle.length >= 20 && numberOfQuestions >= 3 && numberOfLevel >= 2 && urlImgQuizz.indexOf("https://") == 0) {
         document.querySelector(".basic-information-quizz").classList.add("display-none")
         document.querySelector(".quizz-questions").classList.remove("display-none")
-        createQuestions(numberOfQuestions, numberOfLevel)
+        createQuestions(numberOfQuestions)
     } else {
         document.querySelector(".informations-input").classList.add("validate")
         if (!(quizzTitle.length <= 65 && quizzTitle.length >= 20)) {
@@ -67,30 +75,30 @@ function basicInformationsQuizz() {
     }
 }
 
-function createQuestions(numberOfQuestions, numberOfLevel) {
+function createQuestions(numberOfQuestions) {
     const quizzQuestions = document.querySelector(".quizz-questions");
-
+    quizzQuestions.innerHTML = "";
     for (let i = 1; i <= numberOfQuestions; i++) {
         quizzQuestions.innerHTML +=
             `
-        <div class="informations-input">
+        <div class="informations-input close">
             <div class="close-questions" onclick="toggleInformations(this)">
                 <h2>Pergunta ${i}</h2>
-                <ion-icon name="create-outline" class="display-none"></ion-icon>
+                <ion-icon name="create-outline" class=""></ion-icon>
             </div>
-            <div class="questions-informations">
-                <input type="text" placeholder="Texto da pergunta">
-                <input type="text" placeholder="Cor de fundo da pergunta">
+            <div class="questions-informations display-none">
+                <input type="text" placeholder="Texto da pergunta" id="question${i}">
+                <input type="text" placeholder="Cor de fundo da pergunta" id="questionColor${i}">
                 <h2>Resposta correta</h2>
-                <input type="text" placeholder="Resposta correta">
-                <input type="text" placeholder="URL da imagem">
+                <input type="text" placeholder="Resposta correta" id="correctAnswer${i}">
+                <input type="url" placeholder="URL da imagem" id="correctAnswerimg${i}">
                 <h2>Respostas incorretas</h2>
-                <input type="text" placeholder="Resposta incorreta 1">
-                <input class="url-img" type="text" placeholder="URL da imagem 1">
-                <input type="text" placeholder="Resposta incorreta 2">
-                <input class="url-img" type="text" placeholder="URL da imagem 2">
-                <input type="text" placeholder="Resposta incorreta 3">
-                <input class="url-img" type="text" placeholder="URL da imagem 3">
+                <input type="text" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}">
+                <input class="url-img" type="url" placeholder="URL da imagem 1" id="wrongAnswer1img${i}">
+                <input type="text" placeholder="Resposta incorreta 2" id="wrongAnswer2${i}">
+                <input class="url-img" type="url" placeholder="URL da imagem 2" id="wrongAnswer2img${i}">
+                <input type="text" placeholder="Resposta incorreta 3" id="wrongAnswer3${i}">
+                <input class="url-img" type="url" placeholder="URL da imagem 3" id="wrongAnswer3img${i}">
             </div>  
         </div>
         `
@@ -105,12 +113,133 @@ function createQuestions(numberOfQuestions, numberOfLevel) {
 
 
 function toggleInformations(information) {
-    document.querySelector(".questions-informations").toggle("display-none");
-    information.classList.toggle("close");
+    const parentElement = information.parentNode;
+    parentElement.classList.toggle("close");
+    parentElement.children[1].classList.toggle("display-none")
+    information.children[1].classList.toggle("display-none")
+
 }
 
 function levelCreation() {
-    alert("teste")
+    document.querySelector(".quizz-questions").classList.add("display-none")
+    document.querySelector(".quizz-levels").classList.remove("display-none")
+    const quizzLevels = document.querySelector(".quizz-levels");
+    const numberOfLevel = document.getElementById("numberOfLevel").value;
+    quizzLevels.innerHTML = "";
+    for (let i = 1; i <= numberOfLevel; i++) {
+        quizzLevels.innerHTML +=
+            `
+        <div class="informations-input close">
+            <div class="close-questions" onclick="toggleInformations(this)">
+                <h2>Nível ${i}</h2>
+                <ion-icon name="create-outline" class=""></ion-icon>
+            </div>
+            <div class="levels-informations display-none">
+                <input type="text" placeholder="Título do nível" id="levelTitle${i}">
+                <input type="text" placeholder="% de acerto mínima" id="levelPercent${i}">
+                <input class="url-img" type="url" placeholder="URL da imagem do nível" id="levelimg${i}">
+                <input type="text" placeholder="Descrição do nível" id="levelDescription${i}">
+            </div>  
+        </div>
+    
+        `
+    }
+    quizzLevels.innerHTML +=
+        `
+    <div class="proceed-button" onclick="sendQuizzToServer()">
+        <p>Finalizar Quizz</p>
+    </div>
+    `
+}
+
+function sendQuizzToServer() {
+    let allDoneQuizz = {
+        title: document.getElementById("quizzTitle").value,
+        image: document.getElementById("urlImgQuizz").value,
+        questions: {},
+        levels: {}
+    }
+
+    for (let i = 0; i < document.getElementById("numberOfQuestions").value; i++) {
+
+        allDoneQuizz.questions[i] = {
+            title: document.getElementById(`question${i+1}`).value,
+            color: document.getElementById(`questionColor${i+1}`).value,
+            answers: [{
+                    text: document.getElementById(`correctAnswer${i+1}`).value,
+                    image: document.getElementById(`correctAnswerimg${i+1}`).value,
+                    isCorrectAnswer: true
+                },
+                {
+                    text: document.getElementById(`wrongAnswer1${i+1}`).value,
+                    image: document.getElementById(`wrongAnswer1img${i+1}`).value,
+                    isCorrectAnswer: false
+                },
+                {
+                    text: document.getElementById(`wrongAnswer2${i+1}`).value,
+                    image: document.getElementById(`wrongAnswer2img${i+1}`).value,
+                    isCorrectAnswer: false
+                },
+                {
+                    text: document.getElementById(`wrongAnswer3${i+1}`).value,
+                    image: document.getElementById(`wrongAnswer3img${i+1}`).value,
+                    isCorrectAnswer: false
+                }
+            ]
+        }
+    }
+
+
+    for (let i = 0; i < document.getElementById("numberOfLevel").value; i++) {
+        allDoneQuizz.levels[i] = {
+            title: document.getElementById(`levelTitle${i+1}`).value,
+            image: document.getElementById(`levelimg${i+1}`).value,
+            text: document.getElementById(`levelDescription${i+1}`).value,
+            minValue: document.getElementById(`levelPercent${i+1}`).value
+        }
+
+
+    }
+    console.log(allDoneQuizz)
+    document.querySelector(".loading-screen").classList.remove("display-none");
+    promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
+    promisse.then(finishQuizz)
+    primisse.catch(error)
+
+}
+
+function error(erro) {
+    console.log("o erro foi = " + erro.value)
+}
+
+function finishQuizz() {
+    document.querySelector(".loading-screen").classList.add("display-none");
+    document.querySelector(".quizz-levels").classList.add("display-none")
+    document.querySelector(".quizz-finish").classList.remove("display-none")
+    const quizzTitle = document.getElementById("quizzTitle").value
+    const urlImgQuizz = document.getElementById("urlImgQuizz").value
+    document.querySelector(".quizz-finish").innerHTML = "";
+    document.querySelector(".quizz-finish").innerHTML +=
+        `
+    <div class="quizz">
+        <div class="background">
+
+        </div>
+        <img src="${urlImgQuizz}">
+        <div class="title">
+            <p>${quizzTitle}</p>
+        </div>
+    </div>
+    <div class="proceed-button" onclick="accessQuizz()">
+        <p>Acessar Quizz</p>
+    </div>
+    <p class = "go-to-home-button" onclick="goToHome()">Voltar pra home</p>
+    `
+}
+
+function goToHome() {
+    document.querySelector(".quizz-finish").classList.add("display-none")
+    document.querySelector(".quizz-creation").classList.add("display-none")
 }
 
 getAllQuizzes()
@@ -228,4 +357,5 @@ function restartQuizz() {
 
 function closeQuizz() {
     document.querySelector(".quizz-container").remove();
+
 }
