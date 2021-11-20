@@ -68,6 +68,11 @@ main {
     color: #EC362D;
 }
 
+.all-quizzes-title {
+    width: 100%;
+    margin: 20px 0;
+}
+
 .all-quizzes h2, .user-quizzes h2 {
     margin: 6% 0 14px 0;
     font-size: 20px;
