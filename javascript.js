@@ -279,7 +279,7 @@ function openQuizz(selectedQuizzId) {
                 document.querySelector(".questions").innerHTML +=
                     `
                         <div class="question" data-identifier="question">
-                            <div class="question-header">
+                            <div class="question-header" style="background-color: ${quizz.data.questions[i].color}">
                                 <span>${quizz.data.questions[i].title}</span>
                             </div>
                             <div class ="answers"></div>
