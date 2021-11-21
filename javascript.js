@@ -41,9 +41,7 @@ function putQuizzes(answer) {
                     </div>
                 `
                 break;
-            }
-
-            else if (j === (userCreatedQuizzId.length - 1)) {
+            } else if (j === (userCreatedQuizzId.length - 1)) {
                 document.querySelector(".all-quizzes").innerHTML +=
                     `
                     
@@ -74,11 +72,12 @@ function basicInformationsQuizz() {
 
 
     if (quizzTitle.length <= 65 && quizzTitle.length >= 20 && numberOfQuestions >= 3 && numberOfLevel >= 2 && urlImgQuizz.indexOf("https://") == 0) {
+        document.querySelector(".basic-information-quizz").classList.remove("validate")
         document.querySelector(".basic-information-quizz").classList.add("display-none")
         document.querySelector(".quizz-questions").classList.remove("display-none")
         createQuestions(numberOfQuestions)
     } else {
-        document.querySelector(".informations-input").classList.add("validate")
+        document.querySelector(".basic-information-quizz").classList.add("validate")
         if (!(quizzTitle.length <= 65 && quizzTitle.length >= 20)) {
             document.getElementById("titleError").classList.remove("display-none")
 
@@ -106,6 +105,7 @@ function basicInformationsQuizz() {
 
 function createQuestions(numberOfQuestions) {
     const quizzQuestions = document.querySelector(".quizz-questions");
+
     quizzQuestions.innerHTML = "";
     for (let i = 1; i <= numberOfQuestions; i++) {
         quizzQuestions.innerHTML +=
@@ -116,18 +116,20 @@ function createQuestions(numberOfQuestions) {
                 <ion-icon name="create-outline" class=""></ion-icon>
             </div>
             <div class="questions-informations display-none">
-                <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}">
-                <p>A pergunta deve ter no mínimo 20 caracteres</p>
-                <input type="text" pattern="#+[A-Fa-f1-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}">
-                <p>A cor deve ser uma cor em hexadecimal</p>
+                <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required>
+                <p class="display-none">A pergunta deve ter no mínimo 20 caracteres</p>
+                <input type="text" pattern="#+[A-Fa-f1-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
+                <p class="display-none">A cor deve ser uma cor em hexadecimal</p>
                 <h2>Resposta correta</h2>
-                <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}">
-                <p>Resposta não pode estar em branco</p>
-                <input type="url" pattern="https://.*" placeholder="URL da imagem" id="correctAnswerimg${i}">
-                <p>O valor informado não é uma URL válida</p>
+                <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required>
+                <p class="display-none">Resposta não pode estar em branco</p>
+                <input type="url" pattern="https://.*" placeholder="URL da imagem" id="correctAnswerimg${i}" required>
+                <p class="display-none">O valor informado não é uma URL válida</p>
                 <h2>Respostas incorretas</h2>
-                <input type="text" minlength="1" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}">
-                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 1" id="wrongAnswer1img${i}">
+                <input type="text" minlength="1" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}" required>
+                <p class="display-none">Resposta não pode estar em branco</p>
+                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 1" id="wrongAnswer1img${i}" required>
+                <p class="display-none">O valor informado não é uma URL válida</p>
                 <input type="text" placeholder="Resposta incorreta 2" id="wrongAnswer2${i}">
                 <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 2" id="wrongAnswer2img${i}">
                 <input type="text" placeholder="Resposta incorreta 3" id="wrongAnswer3${i}">
@@ -136,6 +138,7 @@ function createQuestions(numberOfQuestions) {
         </div>
         `
     }
+
     quizzQuestions.innerHTML +=
         `
     <div class="proceed-button" onclick="levelCreation()">
@@ -155,95 +158,178 @@ function toggleInformations(information) {
 }
 
 function levelCreation() {
-    document.querySelector(".quizz-questions").classList.add("display-none")
-    document.querySelector(".quizz-levels").classList.remove("display-none")
-    const quizzLevels = document.querySelector(".quizz-levels");
-    const numberOfLevel = document.getElementById("numberOfLevel").value;
-    quizzLevels.innerHTML = "";
-    for (let i = 1; i <= numberOfLevel; i++) {
+    let allvalidateQuestions = true;
+    let validateQuestions;
+    for (let i = 1; i <= document.getElementById("numberOfQuestions").value; i++) {
+        if (document.getElementById(`question${i}`).checkValidity()) {
+            document.getElementById(`question${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`question${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`questionColor${i}`).checkValidity()) {
+            document.getElementById(`questionColor${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`questionColor${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`correctAnswer${i}`).checkValidity()) {
+            document.getElementById(`correctAnswer${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`correctAnswer${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`correctAnswerimg${i}`).checkValidity()) {
+            document.getElementById(`correctAnswerimg${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`correctAnswerimg${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`wrongAnswer1${i}`).checkValidity()) {
+            document.getElementById(`wrongAnswer1${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`wrongAnswer1${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`wrongAnswer1img${i}`).checkValidity()) {
+            document.getElementById(`wrongAnswer1img${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`wrongAnswer1img${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        validateQuestions = document.getElementById(`question${i}`).checkValidity() &&
+            document.getElementById(`questionColor${i}`).checkValidity() &&
+            document.getElementById(`correctAnswer${i}`).checkValidity() &&
+            document.getElementById(`correctAnswerimg${i}`).checkValidity() &&
+            document.getElementById(`wrongAnswer1${i}`).checkValidity() &&
+            document.getElementById(`wrongAnswer1img${i}`).checkValidity();
+        allvalidateQuestions = validateQuestions && allvalidateQuestions;
+    }
+
+    if (allvalidateQuestions) {
+        const quizzLevels = document.querySelector(".quizz-levels");
+        const numberOfLevel = document.getElementById("numberOfLevel").value;
+        quizzLevels.innerHTML = "";
+        document.querySelector(".quizz-questions").classList.add("display-none")
+        document.querySelector(".quizz-levels").classList.remove("display-none")
+        document.querySelector(".quizz-questions").classList.remove("validate")
+        for (let i = 1; i <= numberOfLevel; i++) {
+            quizzLevels.innerHTML +=
+                `
+                <div class="informations-input close">
+                    <div class="close-questions" onclick="toggleInformations(this)">
+                        <h2>Nível ${i}</h2>
+                        <ion-icon name="create-outline" class=""></ion-icon>
+                    </div>
+                    <div class="levels-informations display-none">
+                        <input type="text" minlength="10" placeholder="Título do nível" id="levelTitle${i}" required>
+                        <p class="display-none">O título deve ter no mínimo 10 caracteres</p>
+                        <input type="text" pattern="^[1-9]?[0-9]{1}$|^100$" placeholder="% de acerto mínima" id="levelPercent${i}" required>
+                        <p class="display-none">O número deve estar entre 0-100</p>
+                        <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem do nível" id="levelimg${i}" required>
+                        <p class="display-none">O valor informado não é uma URL válida</p>
+                        <input type="text" minlength="30" placeholder="Descrição do nível" id="levelDescription${i}" required>
+                        <p class="display-none">A descrição deve ter no mínimo 30 caracteres</p>
+                    </div>  
+                </div>
+            
+                `
+        }
         quizzLevels.innerHTML +=
             `
-        <div class="informations-input close">
-            <div class="close-questions" onclick="toggleInformations(this)">
-                <h2>Nível ${i}</h2>
-                <ion-icon name="create-outline" class=""></ion-icon>
+            <div class="proceed-button" onclick="sendQuizzToServer()">
+                <p>Finalizar Quizz</p>
             </div>
-            <div class="levels-informations display-none">
-                <input type="text" minlength="10" placeholder="Título do nível" id="levelTitle${i}">
-                <input type="text" pattern="^[1-9]?[0-9]{1}$|^100$" placeholder="% de acerto mínima" id="levelPercent${i}">
-                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem do nível" id="levelimg${i}">
-                <input type="text" minlength="30" placeholder="Descrição do nível" id="levelDescription${i}">
-            </div>  
-        </div>
-    
-        `
+            `
+    } else {
+        document.querySelector(".quizz-questions").classList.add("validate")
     }
-    quizzLevels.innerHTML +=
-        `
-    <div class="proceed-button" onclick="sendQuizzToServer()">
-        <p>Finalizar Quizz</p>
-    </div>
-    `
+
 }
+
 
 function sendQuizzToServer() {
-    let allDoneQuizz = {
-        title: document.getElementById("quizzTitle").value,
-        image: document.getElementById("urlImgQuizz").value,
-        questions: [],
-        levels: []
+    let allvalidateLevels = true;
+    let validateLevels;
+    for (let i = 1; i <= document.getElementById("numberOfLevel").value; i++) {
+        if (document.getElementById(`levelTitle${i}`).checkValidity()) {
+            document.getElementById(`levelTitle${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`levelTitle${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`levelPercent${i}`).checkValidity()) {
+            document.getElementById(`levelPercent${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`levelPercent${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`levelimg${i}`).checkValidity()) {
+            document.getElementById(`levelimg${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`levelimg${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        if (document.getElementById(`levelDescription${i}`).checkValidity()) {
+            document.getElementById(`levelDescription${i}`).nextElementSibling.classList.add("display-none")
+        } else {
+            document.getElementById(`levelDescription${i}`).nextElementSibling.classList.remove("display-none")
+        }
+        validateLevels = document.getElementById(`question${i}`).checkValidity() &&
+            document.getElementById(`levelTitle${i}`).checkValidity() &&
+            document.getElementById(`levelPercent${i}`).checkValidity() &&
+            document.getElementById(`levelimg${i}`).checkValidity() &&
+            document.getElementById(`levelDescription${i}`).checkValidity();
+        allvalidateLevels = validateLevels && allvalidateLevels;
     }
 
-    for (let i = 0; i < document.getElementById("numberOfQuestions").value; i++) {
+    if (allvalidateLevels) {
+        document.querySelector(".quizz-levels").classList.remove("validate")
+        let allDoneQuizz = {
+            title: document.getElementById("quizzTitle").value,
+            image: document.getElementById("urlImgQuizz").value,
+            questions: [],
+            levels: []
+        }
 
-        allDoneQuizz.questions[i] = {
-            title: document.getElementById(`question${i + 1}`).value,
-            color: document.getElementById(`questionColor${i + 1}`).value,
-            answers: [{
-                text: document.getElementById(`correctAnswer${i + 1}`).value,
-                image: document.getElementById(`correctAnswerimg${i + 1}`).value,
-                isCorrectAnswer: true
-            },
-            {
-                text: document.getElementById(`wrongAnswer1${i + 1}`).value,
-                image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
-                isCorrectAnswer: false
-            },
-            {
-                text: document.getElementById(`wrongAnswer2${i + 1}`).value,
-                image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
-                isCorrectAnswer: false
-            },
-            {
-                text: document.getElementById(`wrongAnswer3${i + 1}`).value,
-                image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
-                isCorrectAnswer: false
+        for (let i = 0; i < document.getElementById("numberOfQuestions").value; i++) {
+
+            allDoneQuizz.questions[i] = {
+                title: document.getElementById(`question${i + 1}`).value,
+                color: document.getElementById(`questionColor${i + 1}`).value,
+                answers: [{
+                        text: document.getElementById(`correctAnswer${i + 1}`).value,
+                        image: document.getElementById(`correctAnswerimg${i + 1}`).value,
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: document.getElementById(`wrongAnswer1${i + 1}`).value,
+                        image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
+                        isCorrectAnswer: false
+                    },
+                    {
+                        text: document.getElementById(`wrongAnswer2${i + 1}`).value,
+                        image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
+                        isCorrectAnswer: false
+                    },
+                    {
+                        text: document.getElementById(`wrongAnswer3${i + 1}`).value,
+                        image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
+                        isCorrectAnswer: false
+                    }
+                ]
             }
-            ]
-        }
-    }
-
-
-    for (let i = 0; i < document.getElementById("numberOfLevel").value; i++) {
-        allDoneQuizz.levels[i] = {
-            title: document.getElementById(`levelTitle${i + 1}`).value,
-            image: document.getElementById(`levelimg${i + 1}`).value,
-            text: document.getElementById(`levelDescription${i + 1}`).value,
-            minValue: document.getElementById(`levelPercent${i + 1}`).value
         }
 
 
+        for (let i = 0; i < document.getElementById("numberOfLevel").value; i++) {
+            allDoneQuizz.levels[i] = {
+                title: document.getElementById(`levelTitle${i + 1}`).value,
+                image: document.getElementById(`levelimg${i + 1}`).value,
+                text: document.getElementById(`levelDescription${i + 1}`).value,
+                minValue: document.getElementById(`levelPercent${i + 1}`).value
+            }
+
+
+        }
+        console.log(allDoneQuizz)
+        document.querySelector(".loading-screen").classList.remove("display-none");
+        promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
+        promisse.then(finishQuizz)
+    } else {
+        document.querySelector(".quizz-levels").classList.add("validate")
     }
-    console.log(allDoneQuizz)
-    document.querySelector(".loading-screen").classList.remove("display-none");
-    promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
-    promisse.then(finishQuizz)
-    promisse.catch(error)
-
-}
-
-function error(erro) {
-    console.log("o erro foi = " + erro.value)
 }
 
 function finishQuizz(serverAnswer) {
@@ -276,20 +362,18 @@ function finishQuizz(serverAnswer) {
 
 
 function addUserCreatedQuizz(id) {
-    let userCreatedQuizzId = [];
+    let localStorageKey = window.localStorage.key(localStorage)
+    console.log("Valor que chega = " + localStorageKey)
 
-
-    userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
-
-    userCreatedQuizzId.push(id);
-
-    console.log(userCreatedQuizzId);
-
-    let stringfieduserCreatedQuizzId = JSON.stringify(userCreatedQuizzId);
-
-    console.log(stringfieduserCreatedQuizzId);
-
-    localStorage.setItem("userCreatedQuizzId", stringfieduserCreatedQuizzId);
+    if (localStorageKey === null) {
+        localStorageKey = 1
+    } else {
+        parseInt(localStorageKey)
+        localStorageKey += 1;
+    }
+    console.log("antes de transformar em string = " + localStorageKey)
+    localStorageKey = JSON.stringify(localStorageKey);
+    localStorage.setItem(localStorageKey, id);
 }
 
 function goToHome() {
@@ -307,6 +391,8 @@ function openQuizz(quizzId) {
     correctAnswers = 0;
     console.log(quizzId);
     document.querySelector(".loading-screen").classList.remove("display-none");
+    document.querySelector(".quizz-finish").classList.add("display-none")
+    document.querySelector(".quizz-creation").classList.add("display-none")
 
     globalQuizzId = quizzId;
     axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${quizzId}`)
@@ -414,5 +500,3 @@ function closeQuizz() {
     document.querySelector(".quizz-container").remove();
 
 }
-
-//inputElement.checkValidity() returns true or false
