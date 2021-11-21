@@ -98,6 +98,7 @@ main {
 .quizz-finish .quizz {
     display: flex;
     justify-content: center;
+    aspect-ratio: auto;
 }
 
 .title {
@@ -112,19 +113,14 @@ main {
 }
 
 .quizz-finish .title {
-    left: -50px;
-    top: 200px;
+    left: 18px;
+    bottom: 20px;
 }
 
 .quizz img {
     width: 100%;
     height: 100%;
     border-radius: 5px;
-}
-
-.quizz-finish .quizz img {
-    min-width: 500px;
-    height: 270px;
 }
 
 .background {
@@ -134,9 +130,11 @@ main {
     position: absolute;
 }
 
-.quizz-finish .background {
-    width: 500px;
-    height: 270px;
+.quizz-finish .background, .quizz-finish img {
+    width: 100%;
+    aspect-ratio: 1.8796;
+    border-radius: 5px;
+    min-width: 500px;
 }
 
 .quizz-container {
@@ -396,6 +394,11 @@ figure.answered.true figcaption {
     align-items: center;
     margin: 60px 0 30px 0;
     color: #FFF5F4;
+    cursor: pointer;
+}
+
+.go-to-home-button {
+    cursor: pointer;
 }
 
 .quizz-finish .proceed-button {
@@ -591,18 +594,10 @@ ion-icon {
         margin: 30px 0 30px 0;
         width: 324px;
     }
-    .quizz-finish .quizz img {
-        min-width: 340px;
-        height: 181px;
+    .quizz-finish .quizz img, .quizz-finish .background {
+        max-width: 340px;
     }
-    .quizz-finish .background {
-        width: 340px;
-        height: 181px;
-    }
-    .quizz-finish .title {
-        left: 18px;
-        top: 110px;
-    }
+
     .close-questions {
         width: 96%;
     }
