@@ -102,6 +102,9 @@ main {
     gap: 20px;
 }
 
+.user-quizzes > span {
+    width: 94vw;
+}
 .quizz {
     position: relative;
     margin-bottom: 30px;

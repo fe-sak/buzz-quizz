@@ -1,9 +1,4 @@
-if (localStorage.getItem("userCreatedQuizzId") === null) {
-    localStorage.setItem("userCreatedQuizzId", JSON.stringify([]));
-    localStorage.setItem("secretKey", JSON.stringify([]));
-}
-
-
+if (localStorage.getItem("userCreatedQuizzes") === null) localStorage.setItem("userCreatedQuizzes", JSON.stringify([]));
 
 function createQuizz() {
     const allInputs = document.querySelectorAll("input");
@@ -23,20 +18,14 @@ function getAllQuizzes() {
 }
 
 function putQuizzes(answer) {
-    let userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
-    document.querySelector(".loading-screen").classList.add("display-none");
+    let userCreatedQuizzesId = [];
 
-    if (userCreatedQuizzId.length > 0) {
-        document.querySelector(".user-quizzes-title").innerHTML =
-            `
-        <h2> Seus Quizzes</h2>
-        <div class="new-create-quizz-button">
-        <ion-icon name="add-circle-sharp" onclick="createQuizz()"></ion-icon>
-        </div>
-        `;
-        document.querySelector(".create-quizz").classList.add("display-none");
-
+    for (let i = 0; i < userCreatedQuizzes.length; i++) {
+        userCreatedQuizzesId.push(userCreatedQuizzes[i].id);
     }
+    let counter = 0;
+
+    document.querySelector(".loading-screen").classList.add("display-none");
 
     document.querySelector(".all-quizzes-title").innerHTML = `<h2> Todos os Quizzes</h2>`;
 
@@ -44,7 +33,7 @@ function putQuizzes(answer) {
 
     document.querySelector(".all-quizzes").innerHTML = "";
     document.querySelector(".user-quizzes").innerHTML = "";
-    if (userCreatedQuizzId.length === 0) {
+    if (userCreatedQuizzesId.length === 0) {
         for (let i = 0; i < quizzes.length; i++) {
             document.querySelector(".all-quizzes").innerHTML +=
                 `
@@ -59,8 +48,8 @@ function putQuizzes(answer) {
         }
     } else {
         for (let i = 0; i < quizzes.length; i++) {
-            for (let j = 0; j < userCreatedQuizzId.length; j++) {
-                if (quizzes[i].id === userCreatedQuizzId[j]) {
+            for (let j = 0; j < userCreatedQuizzesId.length; j++) {
+                if (quizzes[i].id === userCreatedQuizzesId[j]) {
                     document.querySelector(".user-quizzes").innerHTML +=
                         `
                             
@@ -70,7 +59,7 @@ function putQuizzes(answer) {
                                         <button>
                                             <ion-icon name="create-outline"></ion-icon>
                                         </button>
-                                        <button onclick="deleteQuizz(this.id)">
+                                        <button onclick="deleteQuizz(this)">
                                             <ion-icon name="trash-outline"></ion-icon>
                                         </button>
                                     </div>
@@ -81,8 +70,9 @@ function putQuizzes(answer) {
                                 </div>
                             </div>
                         `
+                    counter++;
                     break;
-                } else if (j === (userCreatedQuizzId.length - 1)) {
+                } else if (j === (userCreatedQuizzesId.length - 1)) {
                     document.querySelector(".all-quizzes").innerHTML +=
                         `
                             <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)">
@@ -98,6 +88,33 @@ function putQuizzes(answer) {
                 }
             }
         }
+    }
+
+
+    if (userCreatedQuizzesId.length > 0) {
+        document.querySelector(".user-quizzes-title").innerHTML =
+            `
+        <h2> Seus Quizzes</h2>
+        <div class="new-create-quizz-button">
+        <ion-icon name="add-circle-sharp" onclick="createQuizz()"></ion-icon>
+        </div>
+        `;
+        document.querySelector(".create-quizz").classList.add("display-none");
+
+    }
+
+    if (counter === 0 && userCreatedQuizzesId.length > 0) {
+        document.querySelector(".user-quizzes").innerHTML = `<span> O servidor não enviou seus quizzes criados devido a grande quantidade de quizzes criados por outros usuários :( </span>`;
+    }
+
+    if (document.querySelector(".buttons") !== null) {
+        let buttons = document.querySelectorAll(".buttons");
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", (e) => {
+                e.stopPropagation();
+            });
+        }
+
     }
 }
 
@@ -347,11 +364,11 @@ function sendQuizzToServer() {
                 }
                 ]
             }
-            if (allDoneQuizz.questions[i].answer[3].text == "") {
+            if (allDoneQuizz.questions[i].answers[3].text == "") {
                 allDoneQuizz.questions[i].answer.pop()
             }
-            if (allDoneQuizz.questions[i].answer[2].text == "") {
-                allDoneQuizz.questions[i].answer.pop()
+            if (allDoneQuizz.questions[i].answers[2].text == "") {
+                allDoneQuizz.questions[i].answers.pop()
             }
         }
 
@@ -407,17 +424,13 @@ function finishQuizz(serverAnswer) {
 
 
 function addUserCreatedQuizz(id, key) {
-    let userCreatedQuizzId = [];
+    userCreatedQuizzes.push({
+        id,
+        key
+    });
 
-    userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
-
-    userCreatedQuizzId.push(id);
-
-
-    let stringfieduserCreatedQuizzId = JSON.stringify(userCreatedQuizzId);
-
-
-    localStorage.setItem("userCreatedQuizzId", stringfieduserCreatedQuizzId);
+    console.log(userCreatedQuizzes);
+    localStorage.setItem("userCreatedQuizzes", JSON.stringify(userCreatedQuizzes));
 }
 
 function goToHome() {
@@ -547,18 +560,20 @@ function closeQuizz() {
 
 }
 
+let userCreatedQuizzes = [];
+
+userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
 // Bônus
 
-function deleteQuizz(id) {
-    console.log(id);
+function deleteQuizz(button) {
+    let id = button.parentNode.parentNode.parentNode.id;
+
+    let key = "";
+
+    for (let i = 0; i < userCreatedQuizzes.length; i++) {
+        if (id == userCreatedQuizzes[i].id) key = userCreatedQuizzes[i].key
+    }
+
+    console.log(key);
 }
 
-if (document.querySelector(".buttons") !== null) {
-    console.log("A");
-    document.querySelector(".buttons").addEventListener("click", function (e) {
-        e.stopPropagation();
-        console.log("A");
-    });
-}
-
-console.log(localStorage.getItem("userCreatedQuizzId"))
