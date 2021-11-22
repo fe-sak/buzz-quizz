@@ -347,12 +347,12 @@ function sendQuizzToServer() {
                 }
                 ]
             }
-            // if (allDoneQuizz.questions[i].answer[3].text == "") {
-            //     allDoneQuizz.questions[i].answer.pop()
-            // }
-            // if (allDoneQuizz.questions[i].answer[2].text == "") {
-            //     allDoneQuizz.questions[i].answer.pop()
-            // }
+            if (allDoneQuizz.questions[i].answer[3].text == "") {
+                allDoneQuizz.questions[i].answer.pop()
+            }
+            if (allDoneQuizz.questions[i].answer[2].text == "") {
+                allDoneQuizz.questions[i].answer.pop()
+            }
         }
 
 
