@@ -27,7 +27,7 @@ function putQuizzes(answer) {
     document.querySelector(".loading-screen").classList.add("display-none");
 
     if (userCreatedQuizzId.length > 0) {
-        document.querySelector(".user-quizzes-title").innerHTML +=
+        document.querySelector(".user-quizzes-title").innerHTML =
             `
         <h2> Seus Quizzes</h2>
         <div class="new-create-quizz-button">
@@ -38,9 +38,12 @@ function putQuizzes(answer) {
 
     }
 
-    document.querySelector(".all-quizzes-title").innerHTML += `<h2> Todos os Quizzes</h2>`;
+    document.querySelector(".all-quizzes-title").innerHTML = `<h2> Todos os Quizzes</h2>`;
 
     const quizzes = answer.data
+
+    document.querySelector(".all-quizzes").innerHTML = "";
+    document.querySelector(".user-quizzes").innerHTML = "";
     if (userCreatedQuizzId.length === 0) {
         for (let i = 0; i < quizzes.length; i++) {
             document.querySelector(".all-quizzes").innerHTML +=
@@ -344,12 +347,12 @@ function sendQuizzToServer() {
                 }
                 ]
             }
-            if (allDoneQuizz.questions[i].answer[3].text == "") {
-                allDoneQuizz.questions[i].answer.pop()
-            }
-            if (allDoneQuizz.questions[i].answer[2].text == "") {
-                allDoneQuizz.questions[i].answer.pop()
-            }
+            // if (allDoneQuizz.questions[i].answer[3].text == "") {
+            //     allDoneQuizz.questions[i].answer.pop()
+            // }
+            // if (allDoneQuizz.questions[i].answer[2].text == "") {
+            //     allDoneQuizz.questions[i].answer.pop()
+            // }
         }
 
 
@@ -418,14 +421,15 @@ function addUserCreatedQuizz(id, key) {
 }
 
 function goToHome() {
+    getAllQuizzes();
     document.querySelector(".all-quizzes").classList.remove("display-none")
     document.querySelector(".quizz-finish").classList.add("display-none");
     document.querySelector(".quizz-creation").classList.add("display-none");
     document.querySelector(".quizz-container").remove();
-
+    document.querySelector(".loading-screen").classList.remove("display-none");
 }
 
-getAllQuizzes()
+getAllQuizzes();
 
 let globalSelectedQuizz = {};
 
