@@ -1,10 +1,16 @@
-if (localStorage.getItem("userCreatedQuizzId") === null) localStorage.setItem("userCreatedQuizzId", JSON.stringify([]));
+if (localStorage.getItem("userCreatedQuizzId") === null) {
+    localStorage.setItem("userCreatedQuizzId", JSON.stringify([]));
+    localStorage.setItem("secretKey", JSON.stringify([]));
+}
+
+
 
 function createQuizz() {
     const allInputs = document.querySelectorAll("input");
     for (let i = 0; i < allInputs.length; i++) {
         allInputs[i].value = ""
     }
+
     document.querySelector(".quizz-creation").classList.remove("display-none")
     document.querySelector(".basic-information-quizz").classList.remove("display-none")
 
@@ -20,7 +26,7 @@ function putQuizzes(answer) {
     let userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
     document.querySelector(".loading-screen").classList.add("display-none");
 
-    if (userCreatedQuizzId.length > 0) document.querySelector(".user-quizzes").innerHTML += `<h2> Seus Quizzes</h2>`;
+    if (userCreatedQuizzId.length > 0) document.querySelector(".user-quizzes-title").innerHTML += `<h2> Seus Quizzes</h2>`;
     document.querySelector(".all-quizzes-title").innerHTML += `<h2> Todos os Quizzes</h2>`;
 
     const quizzes = answer.data
@@ -45,9 +51,16 @@ function putQuizzes(answer) {
                         `
                             
                             <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)">
-                            <div class="background">
-                                        
-                            </div>
+                                <div class="background">
+                                    <div class="buttons">
+                                        <button>
+                                            <ion-icon name="create-outline"></ion-icon>
+                                        </button>
+                                        <button onclick="deleteQuizz(this.id)">
+                                            <ion-icon name="trash-outline"></ion-icon>
+                                        </button>
+                                    </div>
+                                </div>
                                 <img src="${quizzes[i].image}">
                                 <div class="title">
                                     <p>${quizzes[i].title}</p>
@@ -128,7 +141,7 @@ function createQuestions(numberOfQuestions) {
             <div class="questions-informations display-none">
                 <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required>
                 <p class="display-none">A pergunta deve ter no mínimo 20 caracteres</p>
-                <input type="text" pattern="#+[A-Fa-f1-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
+                <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
                 <p class="display-none">A cor deve ser uma cor em hexadecimal</p>
                 <h2>Resposta correta</h2>
                 <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required>
@@ -299,25 +312,25 @@ function sendQuizzToServer() {
                 title: document.getElementById(`question${i + 1}`).value,
                 color: document.getElementById(`questionColor${i + 1}`).value,
                 answers: [{
-                        text: document.getElementById(`correctAnswer${i + 1}`).value,
-                        image: document.getElementById(`correctAnswerimg${i + 1}`).value,
-                        isCorrectAnswer: true
-                    },
-                    {
-                        text: document.getElementById(`wrongAnswer1${i + 1}`).value,
-                        image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: document.getElementById(`wrongAnswer2${i + 1}`).value,
-                        image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: document.getElementById(`wrongAnswer3${i + 1}`).value,
-                        image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
-                        isCorrectAnswer: false
-                    }
+                    text: document.getElementById(`correctAnswer${i + 1}`).value,
+                    image: document.getElementById(`correctAnswerimg${i + 1}`).value,
+                    isCorrectAnswer: true
+                },
+                {
+                    text: document.getElementById(`wrongAnswer1${i + 1}`).value,
+                    image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
+                    isCorrectAnswer: false
+                },
+                {
+                    text: document.getElementById(`wrongAnswer2${i + 1}`).value,
+                    image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
+                    isCorrectAnswer: false
+                },
+                {
+                    text: document.getElementById(`wrongAnswer3${i + 1}`).value,
+                    image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
+                    isCorrectAnswer: false
+                }
                 ]
             }
         }
@@ -343,7 +356,7 @@ function sendQuizzToServer() {
 }
 
 function finishQuizz(serverAnswer) {
-
+    console.log(serverAnswer);
     document.querySelector(".loading-screen").classList.add("display-none");
     document.querySelector(".quizz-levels").classList.add("display-none")
     document.querySelector(".quizz-finish").classList.remove("display-none")
@@ -367,13 +380,12 @@ function finishQuizz(serverAnswer) {
     <p class = "go-to-home-button" onclick="goToHome()">Voltar pra home</p>
     `
 
-    addUserCreatedQuizz(serverAnswer.data.id);
+    addUserCreatedQuizz(serverAnswer.data.id, serverAnswer.data.key);
 }
 
 
-function addUserCreatedQuizz(id) {
+function addUserCreatedQuizz(id, key) {
     let userCreatedQuizzId = [];
-
 
     userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
 
@@ -510,3 +522,19 @@ function closeQuizz() {
     document.querySelector(".quizz-container").remove();
 
 }
+
+// Bônus
+
+function deleteQuizz(id) {
+    console.log(id);
+}
+
+if (document.querySelector(".buttons") !== null) {
+    console.log("A");
+    document.querySelector(".buttons").addEventListener("click", function (e) {
+        e.stopPropagation();
+        console.log("A");
+    });
+}
+
+console.log(localStorage.getItem("userCreatedQuizzId"))

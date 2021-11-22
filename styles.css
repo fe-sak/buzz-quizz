@@ -68,7 +68,7 @@ main {
     color: #EC362D;
 }
 
-.all-quizzes-title {
+.all-quizzes-title, .user-quizzes-title {
     width: 100%;
     margin: 20px 0;
 }
@@ -93,6 +93,37 @@ main {
     width: 30%;
     aspect-ratio: 1.87845304;
     cursor: pointer;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
+    position: absolute;
+}
+
+.quizz .background .buttons {
+    position: absolute;
+    top: 9px;
+    right: 0;
+    background-color: #EC362D;
+
+    border-radius: 18px 0px 0px 18px;
+
+}
+.quizz .background .buttons button {
+    background-color: transparent;
+    display: block;
+    width: 43px;
+    height: 43.5px;
+    border: none;
+    cursor: pointer;
+}
+
+.quizz .background .buttons button ion-icon {
+    margin: auto;
+    font-size: 25px;
+    color: white;
 }
 
 .quizz-finish .quizz {
@@ -123,12 +154,7 @@ main {
     border-radius: 5px;
 }
 
-.background {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
-    position: absolute;
-}
+
 
 .quizz-finish .background, .quizz-finish img {
     width: 100%;
@@ -470,7 +496,7 @@ figure.answered.true figcaption {
     width: 600px;
 }
 
-ion-icon {
+.icon-inner ion-icon {
     margin-top: 12px;
     padding-right: 30px;
     font-size: 25px;
