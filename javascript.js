@@ -12,6 +12,7 @@ function createQuizz() {
     document.querySelector(".all-quizzes").classList.add("display-none")
     document.querySelector(".quizz-creation").classList.remove("display-none")
     document.querySelector(".basic-information-quizz").classList.remove("display-none")
+    document.querySelector(".quizz-levels").classList.add("display-none")
 
 }
 
@@ -159,7 +160,11 @@ function basicInformationsQuizz() {
             document.getElementById("levelNumberError").classList.add("display-none")
         }
 
+
     }
+
+    document.querySelector(".quizz-levels").classList.add("display-none")
+
 }
 
 function createQuestions(numberOfQuestions) {
@@ -416,6 +421,7 @@ function sendQuizzToServer() {
             allDoneQuizz.headers.push({ "Secret-Key": key, })
             console.log(allDoneQuizz)
             promisse = axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, allDoneQuizz)
+            isEdit = false;
             promisse.then(goToHome)
         } else {
             promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
@@ -650,10 +656,6 @@ function getQuizzInformation(answer) {
 
     isEdit = true;
     createQuizz();
-    alert("id = " + id + "\nkey = " + key)
-    console.log(answer.data)
-
-
 }
 
 
@@ -667,15 +669,15 @@ function deleteQuizz(button) {
     }
 
     console.log(key);
-}
 
-if (window.confirm("Deseja deletar este quizz? Esta ação não pode ser desfeita")) {
-    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {
-            headers: {
-                "Secret-Key": key,
-            }
-        })
-        .then(getAllQuizzes);
-}
+
+    if (window.confirm("Deseja deletar este quizz? Esta ação não pode ser desfeita")) {
+        axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {
+                headers: {
+                    "Secret-Key": key,
+                }
+            })
+            .then(getAllQuizzes);
+    }
 
 }
