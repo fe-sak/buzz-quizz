@@ -597,6 +597,7 @@ function closeQuizz() {
 let userCreatedQuizzes = [];
 
 userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
+
 // Bônus
 let id;
 
@@ -666,4 +667,15 @@ function deleteQuizz(button) {
     }
 
     console.log(key);
+}
+
+if (window.confirm("Deseja deletar este quizz? Esta ação não pode ser desfeita")) {
+    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {
+            headers: {
+                "Secret-Key": key,
+            }
+        })
+        .then(getAllQuizzes);
+}
+
 }
