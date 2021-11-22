@@ -27,7 +27,7 @@ function putQuizzes(answer) {
     document.querySelector(".loading-screen").classList.add("display-none");
 
     if (userCreatedQuizzId.length > 0) {
-        document.querySelector(".user-quizz-title").innerHTML +=
+        document.querySelector(".user-quizzes-title").innerHTML +=
             `
         <h2> Seus Quizzes</h2>
         <div class="new-create-quizz-button">
