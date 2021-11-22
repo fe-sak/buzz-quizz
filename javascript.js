@@ -20,6 +20,8 @@ function getAllQuizzes() {
 function putQuizzes(answer) {
     let userCreatedQuizzesId = [];
 
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
+    console.log(userCreatedQuizzes.length);
     for (let i = 0; i < userCreatedQuizzes.length; i++) {
         userCreatedQuizzesId.push(userCreatedQuizzes[i].id);
     }
@@ -27,6 +29,7 @@ function putQuizzes(answer) {
 
     document.querySelector(".loading-screen").classList.add("display-none");
 
+    document.querySelector(".user-quizzes-title").innerHTML = ``;
     document.querySelector(".all-quizzes-title").innerHTML = `<h2> Todos os Quizzes</h2>`;
 
     const quizzes = answer.data
@@ -101,7 +104,7 @@ function putQuizzes(answer) {
         `;
         document.querySelector(".create-quizz").classList.add("display-none");
 
-    }
+    } else document.querySelector(".create-quizz").classList.remove("display-none");
 
     if (counter === 0 && userCreatedQuizzesId.length > 0) {
         document.querySelector(".user-quizzes").innerHTML = `<span> O servidor não enviou seus quizzes criados devido a grande quantidade de quizzes criados por outros usuários :( </span>`;
@@ -424,6 +427,8 @@ function finishQuizz(serverAnswer) {
 
 
 function addUserCreatedQuizz(id, key) {
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
+
     userCreatedQuizzes.push({
         id,
         key
@@ -562,11 +567,12 @@ function closeQuizz() {
 
 let userCreatedQuizzes = [];
 
-userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
+
 
 // Bônus
 
 function deleteQuizz(button) {
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
     let id = button.parentNode.parentNode.parentNode.id;
 
     let key = "";
@@ -583,7 +589,19 @@ function deleteQuizz(button) {
                 "Secret-Key": key,
             }
         })
-            .then(getAllQuizzes);
+            .then(() => {
+                console.log(userCreatedQuizzes);
+                for (let i = userCreatedQuizzes.length - 1; i >= 0; i--) {
+                    if (userCreatedQuizzes[i].id == id) {
+                        userCreatedQuizzes.splice(i, 1);
+                        localStorage.setItem("userCreatedQuizzes", JSON.stringify(userCreatedQuizzes));
+                        console.log(localStorage.getItem("userCreatedQuizzes"));
+                    }
+
+                }
+
+                getAllQuizzes();
+            });
     }
 
 }

@@ -159,6 +159,7 @@ main {
     color: #FFFFFF;
     font-size: 19px;
     line-height: 22px;
+    word-break: break-word;
 }
 
 .quizz-finish .title {
