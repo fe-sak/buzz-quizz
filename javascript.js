@@ -1,9 +1,13 @@
 if (localStorage.getItem("userCreatedQuizzes") === null) localStorage.setItem("userCreatedQuizzes", JSON.stringify([]));
 
+let isEdit = false
+
 function createQuizz() {
     const allInputs = document.querySelectorAll("input");
-    for (let i = 0; i < allInputs.length; i++) {
-        allInputs[i].value = ""
+    if (!isEdit) {
+        for (let i = 0; i < allInputs.length; i++) {
+            allInputs[i].value = ""
+        }
     }
     document.querySelector(".all-quizzes").classList.add("display-none")
     document.querySelector(".quizz-creation").classList.remove("display-none")
@@ -59,7 +63,7 @@ function putQuizzes(answer) {
                             <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)">
                                 <div class="background">
                                     <div class="buttons">
-                                        <button>
+                                        <button onclick="editQuizz(this)">
                                             <ion-icon name="create-outline"></ion-icon>
                                         </button>
                                         <button onclick="deleteQuizz(this)">
@@ -121,13 +125,14 @@ function putQuizzes(answer) {
     }
 }
 
+
 function basicInformationsQuizz() {
     const quizzTitle = document.getElementById("quizzTitle").value
     const urlImgQuizz = document.getElementById("urlImgQuizz").value
     const numberOfQuestions = document.getElementById("numberOfQuestions").value
     const numberOfLevel = document.getElementById("numberOfLevel").value
 
-
+    document.querySelector(".quizz-levels").classList.add("display-none")
     if (quizzTitle.length <= 65 && quizzTitle.length >= 20 && numberOfQuestions >= 3 && numberOfLevel >= 2 && urlImgQuizz.indexOf("https://") == 0) {
         document.querySelector(".basic-information-quizz").classList.remove("validate")
         document.querySelector(".basic-information-quizz").classList.add("display-none")
@@ -163,46 +168,50 @@ function basicInformationsQuizz() {
 function createQuestions(numberOfQuestions) {
     const quizzQuestions = document.querySelector(".quizz-questions");
 
-    quizzQuestions.innerHTML = "";
-    for (let i = 1; i <= numberOfQuestions; i++) {
+    if (!isEdit) {
+
+        quizzQuestions.innerHTML = "";
+        for (let i = 1; i <= numberOfQuestions; i++) {
+            quizzQuestions.innerHTML +=
+                `
+            <div class="informations-input close">
+                <div class="close-questions" onclick="toggleInformations(this)">
+                    <h2>Pergunta ${i}</h2>
+                    <ion-icon name="create-outline" class=""></ion-icon>
+                </div>
+                <div class="questions-informations display-none">
+                    <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required>
+                    <p class="display-none">A pergunta deve ter no mínimo 20 caracteres</p>
+                    <input type="text" <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
+                    <p class="display-none">A cor deve ser uma cor em hexadecimal</p>
+                    <h2>Resposta correta</h2>
+                    <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required>
+                    <p class="display-none">Resposta não pode estar em branco</p>
+                    <input type="url" pattern="https://.*" placeholder="URL da imagem" id="correctAnswerimg${i}" required>
+                    <p class="display-none">O valor informado não é uma URL válida</p>
+                    <h2>Respostas incorretas</h2>
+                    <input type="text" minlength="1" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}" required>
+                    <p class="display-none">Resposta não pode estar em branco</p>
+                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 1" id="wrongAnswer1img${i}" required>
+                    <p class="display-none">O valor informado não é uma URL válida</p>
+                    <input type="text" placeholder="Resposta incorreta 2" id="wrongAnswer2${i}">
+                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 2" id="wrongAnswer2img${i}">
+                    <input type="text" placeholder="Resposta incorreta 3" id="wrongAnswer3${i}">
+                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 3" id="wrongAnswer3img${i}">
+                </div>  
+            </div>
+            `
+        }
+
         quizzQuestions.innerHTML +=
             `
-        <div class="informations-input close">
-            <div class="close-questions" onclick="toggleInformations(this)">
-                <h2>Pergunta ${i}</h2>
-                <ion-icon name="create-outline" class=""></ion-icon>
-            </div>
-            <div class="questions-informations display-none">
-                <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required>
-                <p class="display-none">A pergunta deve ter no mínimo 20 caracteres</p>
-                <input type="text" <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
-                <p class="display-none">A cor deve ser uma cor em hexadecimal</p>
-                <h2>Resposta correta</h2>
-                <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required>
-                <p class="display-none">Resposta não pode estar em branco</p>
-                <input type="url" pattern="https://.*" placeholder="URL da imagem" id="correctAnswerimg${i}" required>
-                <p class="display-none">O valor informado não é uma URL válida</p>
-                <h2>Respostas incorretas</h2>
-                <input type="text" minlength="1" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}" required>
-                <p class="display-none">Resposta não pode estar em branco</p>
-                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 1" id="wrongAnswer1img${i}" required>
-                <p class="display-none">O valor informado não é uma URL válida</p>
-                <input type="text" placeholder="Resposta incorreta 2" id="wrongAnswer2${i}">
-                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 2" id="wrongAnswer2img${i}">
-                <input type="text" placeholder="Resposta incorreta 3" id="wrongAnswer3${i}">
-                <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 3" id="wrongAnswer3img${i}">
-            </div>  
+        <div class="proceed-button" onclick="levelCreation()">
+            <p>Prosseguir pra criar níveis</p>
         </div>
         `
     }
-
-    quizzQuestions.innerHTML +=
-        `
-    <div class="proceed-button" onclick="levelCreation()">
-        <p>Prosseguir pra criar níveis</p>
-    </div>
-    `
 }
+
 
 
 
@@ -217,6 +226,11 @@ function toggleInformations(information) {
 function levelCreation() {
     let allvalidateQuestions = true;
     let validateQuestions;
+
+    const quizzLevels = document.querySelector(".quizz-levels");
+    const numberOfLevel = document.getElementById("numberOfLevel").value;
+
+
     for (let i = 1; i <= document.getElementById("numberOfQuestions").value; i++) {
         if (document.getElementById(`question${i}`).checkValidity()) {
             document.getElementById(`question${i}`).nextElementSibling.classList.add("display-none")
@@ -258,12 +272,19 @@ function levelCreation() {
     }
 
     if (allvalidateQuestions) {
-        const quizzLevels = document.querySelector(".quizz-levels");
-        const numberOfLevel = document.getElementById("numberOfLevel").value;
-        quizzLevels.innerHTML = "";
-        document.querySelector(".quizz-questions").classList.add("display-none")
-        document.querySelector(".quizz-levels").classList.remove("display-none")
         document.querySelector(".quizz-questions").classList.remove("validate")
+        document.querySelector(".quizz-questions").classList.add("display-none")
+
+    } else {
+        document.querySelector(".quizz-questions").classList.add("validate")
+
+
+    }
+    if (!isEdit) {
+        document.querySelector(".quizz-questions").classList.add("validate")
+        document.querySelector(".quizz-levels").classList.add("display-none")
+
+        quizzLevels.innerHTML = "";
         for (let i = 1; i <= numberOfLevel; i++) {
             quizzLevels.innerHTML +=
                 `
@@ -292,10 +313,8 @@ function levelCreation() {
                 <p>Finalizar Quizz</p>
             </div>
             `
-    } else {
-        document.querySelector(".quizz-questions").classList.add("validate")
     }
-
+    document.querySelector(".quizz-levels").classList.remove("display-none")
 }
 
 
@@ -333,11 +352,14 @@ function sendQuizzToServer() {
 
     if (allvalidateLevels) {
         document.querySelector(".quizz-levels").classList.remove("validate")
+        let key = ""
         let allDoneQuizz = {
             title: document.getElementById("quizzTitle").value,
             image: document.getElementById("urlImgQuizz").value,
             questions: [],
-            levels: []
+            levels: [],
+
+
         }
 
         for (let i = 0; i < document.getElementById("numberOfQuestions").value; i++) {
@@ -368,7 +390,7 @@ function sendQuizzToServer() {
                 ]
             }
             if (allDoneQuizz.questions[i].answers[3].text == "") {
-                allDoneQuizz.questions[i].answer.pop()
+                allDoneQuizz.questions[i].answers.pop()
             }
             if (allDoneQuizz.questions[i].answers[2].text == "") {
                 allDoneQuizz.questions[i].answers.pop()
@@ -386,12 +408,24 @@ function sendQuizzToServer() {
 
 
         }
-
-
-        console.log(allDoneQuizz)
         document.querySelector(".loading-screen").classList.remove("display-none");
-        promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
-        promisse.then(finishQuizz)
+        console.log(allDoneQuizz)
+        if (isEdit) {
+
+            for (let i = 0; i < userCreatedQuizzes.length; i++) {
+                if (id == userCreatedQuizzes[i].id) key = userCreatedQuizzes[i].key
+            }
+
+            allDoneQuizz.headers.push({ "Secret-Key": key, })
+            console.log(allDoneQuizz)
+            promisse = axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, allDoneQuizz)
+            promisse.then(goToHome)
+        } else {
+            promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
+            promisse.then(finishQuizz)
+
+        }
+
     } else {
         document.querySelector(".quizz-levels").classList.add("validate")
     }
@@ -570,6 +604,63 @@ let userCreatedQuizzes = [];
 
 
 // Bônus
+let id;
+
+function editQuizz(button) {
+    id = button.parentNode.parentNode.parentNode.id;
+
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/" + id)
+    promisse.then(getQuizzInformation)
+}
+
+function getQuizzInformation(answer) {
+    const allInputs = document.querySelectorAll("input");
+
+    for (let i = 0; i < allInputs.length; i++) {
+        allInputs[i].value = ""
+    }
+
+    document.getElementById("quizzTitle").value = answer.data.title
+    document.getElementById("urlImgQuizz").value = answer.data.image
+    document.getElementById("numberOfQuestions").value = answer.data.questions.length
+    document.getElementById("numberOfLevel").value = answer.data.levels.length
+    createQuestions(answer.data.questions.length)
+    for (let i = 0; i < answer.data.questions.length; i++) {
+
+        document.getElementById(`question${i + 1}`).value = answer.data.questions[i].title
+        document.getElementById(`questionColor${i + 1}`).value = answer.data.questions[i].color
+
+        document.getElementById(`correctAnswer${i + 1}`).value = answer.data.questions[i].answers[0].text
+        document.getElementById(`correctAnswerimg${i + 1}`).value = answer.data.questions[i].answers[0].image
+
+        document.getElementById(`wrongAnswer1${i + 1}`).value = answer.data.questions[i].answers[1].text
+        document.getElementById(`wrongAnswer1img${i + 1}`).value = answer.data.questions[i].answers[1].image
+        if (answer.data.questions[i].answers[2]) {
+            document.getElementById(`wrongAnswer2${i + 1}`).value = answer.data.questions[i].answers[2].text
+            document.getElementById(`wrongAnswer2img${i + 1}`).value = answer.data.questions[i].answers[2].image
+        }
+        if (answer.data.questions[i].answers[3]) {
+            document.getElementById(`wrongAnswer3${i + 1}`).value = answer.data.questions[i].answers[3].text
+            document.getElementById(`wrongAnswer3img${i + 1}`).value = answer.data.questions[i].answers[3].image
+        }
+        levelCreation()
+        for (let i = 0; i < answer.data.levels.length; i++) {
+            document.getElementById(`levelTitle${i + 1}`).value = answer.data.levels[i].title
+            document.getElementById(`levelimg${i + 1}`).value = answer.data.levels[i].image
+            document.getElementById(`levelDescription${i + 1}`).value = answer.data.levels[i].text
+            document.getElementById(`levelPercent${i + 1}`).value = answer.data.levels[i].minValue
+        }
+
+    }
+
+    isEdit = true;
+    createQuizz();
+    alert("id = " + id + "\nkey = " + key)
+    console.log(answer.data)
+
+
+}
+
 
 function deleteQuizz(button) {
     userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
@@ -582,27 +673,25 @@ function deleteQuizz(button) {
     }
 
     console.log(key);
-
-    if (window.confirm("Deseja deletar este quizz? Esta ação não pode ser desfeita")) {
-        axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {
-            headers: {
-                "Secret-Key": key,
-            }
-        })
-            .then(() => {
-                console.log(userCreatedQuizzes);
-                for (let i = userCreatedQuizzes.length - 1; i >= 0; i--) {
-                    if (userCreatedQuizzes[i].id == id) {
-                        userCreatedQuizzes.splice(i, 1);
-                        localStorage.setItem("userCreatedQuizzes", JSON.stringify(userCreatedQuizzes));
-                        console.log(localStorage.getItem("userCreatedQuizzes"));
-                    }
-
-                }
-
-                getAllQuizzes();
-            });
-    }
-
 }
 
+if (window.confirm("Deseja deletar este quizz? Esta ação não pode ser desfeita")) {
+    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {
+        headers: {
+            "Secret-Key": key,
+        }
+    })
+        .then(() => {
+            console.log(userCreatedQuizzes);
+            for (let i = userCreatedQuizzes.length - 1; i >= 0; i--) {
+                if (userCreatedQuizzes[i].id == id) {
+                    userCreatedQuizzes.splice(i, 1);
+                    localStorage.setItem("userCreatedQuizzes", JSON.stringify(userCreatedQuizzes));
+                    console.log(localStorage.getItem("userCreatedQuizzes"));
+                }
+
+            }
+
+            getAllQuizzes();
+        });
+}
