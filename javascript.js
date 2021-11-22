@@ -25,6 +25,8 @@ function getAllQuizzes() {
 function putQuizzes(answer) {
     let userCreatedQuizzesId = [];
 
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
+    console.log(userCreatedQuizzes.length);
     for (let i = 0; i < userCreatedQuizzes.length; i++) {
         userCreatedQuizzesId.push(userCreatedQuizzes[i].id);
     }
@@ -32,6 +34,7 @@ function putQuizzes(answer) {
 
     document.querySelector(".loading-screen").classList.add("display-none");
 
+    document.querySelector(".user-quizzes-title").innerHTML = ``;
     document.querySelector(".all-quizzes-title").innerHTML = `<h2> Todos os Quizzes</h2>`;
 
     const quizzes = answer.data
@@ -106,7 +109,7 @@ function putQuizzes(answer) {
         `;
         document.querySelector(".create-quizz").classList.add("display-none");
 
-    }
+    } else document.querySelector(".create-quizz").classList.remove("display-none");
 
     if (counter === 0 && userCreatedQuizzesId.length > 0) {
         document.querySelector(".user-quizzes").innerHTML = `<span> O servidor não enviou seus quizzes criados devido a grande quantidade de quizzes criados por outros usuários :( </span>`;
@@ -284,7 +287,7 @@ function levelCreation() {
     }
     if (!isEdit) {
         document.querySelector(".quizz-questions").classList.add("validate")
-        document.querySelector(".quizz-levels").classList.add("display-none")
+        document.querySelector(".quizz-levels").classList.remove("display-none")
 
         quizzLevels.innerHTML = "";
         for (let i = 1; i <= numberOfLevel; i++) {
@@ -315,8 +318,10 @@ function levelCreation() {
                 <p>Finalizar Quizz</p>
             </div>
             `
+    } else {
+        document.querySelector(".quizz-levels").classList.remove("display-none")
     }
-    document.querySelector(".quizz-levels").classList.remove("display-none")
+
 }
 
 
@@ -351,11 +356,12 @@ function sendQuizzToServer() {
             document.getElementById(`levelDescription${i}`).checkValidity();
         allvalidateLevels = validateLevels && allvalidateLevels;
     }
+    let allDoneQuizz = {};
+    let key = ""
 
     if (allvalidateLevels) {
         document.querySelector(".quizz-levels").classList.remove("validate")
-        let key = ""
-        let allDoneQuizz = {
+        allDoneQuizz = {
             title: document.getElementById("quizzTitle").value,
             image: document.getElementById("urlImgQuizz").value,
             questions: [],
@@ -411,17 +417,21 @@ function sendQuizzToServer() {
 
         }
         document.querySelector(".loading-screen").classList.remove("display-none");
-        console.log(allDoneQuizz)
+
         if (isEdit) {
 
             for (let i = 0; i < userCreatedQuizzes.length; i++) {
                 if (id == userCreatedQuizzes[i].id) key = userCreatedQuizzes[i].key
             }
 
-            allDoneQuizz.headers.push({ "Secret-Key": key, })
-            console.log(allDoneQuizz)
+
             promisse = axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, allDoneQuizz)
             isEdit = false;
+            promisse = axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, allDoneQuizz, {
+                headers: {
+                    "Secret-Key": key,
+                }
+            })
             promisse.then(goToHome)
         } else {
             promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
@@ -435,7 +445,7 @@ function sendQuizzToServer() {
 }
 
 function finishQuizz(serverAnswer) {
-    console.log(serverAnswer);
+
     document.querySelector(".loading-screen").classList.add("display-none");
     document.querySelector(".quizz-levels").classList.add("display-none")
     document.querySelector(".quizz-finish").classList.remove("display-none")
@@ -464,12 +474,14 @@ function finishQuizz(serverAnswer) {
 
 
 function addUserCreatedQuizz(id, key) {
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
+
     userCreatedQuizzes.push({
         id,
         key
     });
 
-    console.log(userCreatedQuizzes);
+
     localStorage.setItem("userCreatedQuizzes", JSON.stringify(userCreatedQuizzes));
 }
 
@@ -602,7 +614,7 @@ function closeQuizz() {
 
 let userCreatedQuizzes = [];
 
-userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
+
 
 // Bônus
 let id;
@@ -654,12 +666,22 @@ function getQuizzInformation(answer) {
 
     }
 
+    let key = "";
+
+    for (let i = 0; i < userCreatedQuizzes.length; i++) {
+        if (id == userCreatedQuizzes[i].id) key = userCreatedQuizzes[i].key;
+    }
+
     isEdit = true;
     createQuizz();
+
+
+
 }
 
 
 function deleteQuizz(button) {
+    userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
     let id = button.parentNode.parentNode.parentNode.id;
 
     let key = "";
@@ -679,5 +701,24 @@ function deleteQuizz(button) {
             })
             .then(getAllQuizzes);
     }
+    if (window.confirm("Deseja deletar este quizz? Esta ação não pode ser desfeita")) {
+        axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {
+                headers: {
+                    "Secret-Key": key,
+                }
+            })
+            .then(() => {
+                console.log(userCreatedQuizzes);
+                for (let i = userCreatedQuizzes.length - 1; i >= 0; i--) {
+                    if (userCreatedQuizzes[i].id == id) {
+                        userCreatedQuizzes.splice(i, 1);
+                        localStorage.setItem("userCreatedQuizzes", JSON.stringify(userCreatedQuizzes));
+                        console.log(localStorage.getItem("userCreatedQuizzes"));
+                    }
 
+                }
+
+                getAllQuizzes();
+            });
+    }
 }
