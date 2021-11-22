@@ -69,7 +69,7 @@ main {
     color: #EC362D;
 }
 
-.user-quizz-title,
+.user-quizzes-title,
 .all-quizzes-title {
     display: flex;
     align-items: center;
@@ -77,14 +77,14 @@ main {
     margin: 20px 0;
 }
 
-.user-quizz-title ion-icon {
+.user-quizzes-title ion-icon {
     color: #EC362D;
     margin: 0;
     font-size: 40px;
     padding-right: 0;
 }
 
-.user-quizz-title h2 {
+.user-quizzes-title h2 {
     margin-right: 15px;
 }
 
@@ -634,7 +634,7 @@ figure.answered.true figcaption {
     .quizz-finish .background {
         max-width: 340px;
     }
-    .user-quizz-title,
+    .user-quizzes-title,
     .all-quizzes-title {
         padding: 0 3% 0 3%;
         margin-top: 70px;
