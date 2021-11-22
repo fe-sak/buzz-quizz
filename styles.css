@@ -130,7 +130,8 @@ main {
     position: absolute;
 }
 
-.quizz-finish .background, .quizz-finish img {
+.quizz-finish .background,
+.quizz-finish img {
     width: 100%;
     aspect-ratio: 1.8796;
     border-radius: 5px;
@@ -376,7 +377,12 @@ figure.answered.true figcaption {
     margin-bottom: 24px;
 }
 
-.informations-input .questions-informations {
+.informations-input .levels-informations .url-img {
+    margin-bottom: 0;
+}
+
+.informations-input .questions-informations,
+.informations-input .levels-informations {
     box-shadow: none;
 }
 
@@ -411,14 +417,14 @@ figure.answered.true figcaption {
     font-size: 16px;
     font-weight: 500;
     line-height: 19px;
-    width: 95%;
+    width: 97%;
     text-align: start;
 }
 
 .quizz-creation input {
     border-radius: 5px;
     height: 46px;
-    width: 95%;
+    width: 98%;
     margin-top: 9px;
     font-size: 19px;
     line-height: 22px;
@@ -457,17 +463,12 @@ figure.answered.true figcaption {
 
 .close-questions,
 .informations-input div h2 {
-    width: 96%;
-    text-align: start;
+    width: 93%;
+    height: 74px;
     font-size: 20px;
     line-height: 23px;
-}
-
-.close-questions {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 600px;
 }
 
 ion-icon {
@@ -492,7 +493,6 @@ ion-icon {
     min-height: auto;
     height: 74px;
     overflow: hidden;
-    padding-left: 2%;
 }
 
 .display-none,
@@ -539,9 +539,6 @@ ion-icon {
     .create-quizz {
         width: 90%;
     }
-    .quizz {
-        width: 100%;
-    }
     .all-quizzes,
     .user-quizzes {
         justify-content: center;
@@ -567,16 +564,6 @@ ion-icon {
     .answers figure figcaption {
         font-size: 13px;
     }
-    main {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: start;
-    }
-    .create-quizz {
-        width: 90%;
-    }
     .all-quizzes,
     .user-quizzes {
         justify-content: center;
@@ -588,18 +575,15 @@ ion-icon {
     .informations-input .levels-informations,
     .informations-input .questions-informations,
     .informations-input {
-        width: 100%;
+        width: 96%;
     }
     .proceed-button {
         margin: 30px 0 30px 0;
         width: 324px;
     }
-    .quizz-finish .quizz img, .quizz-finish .background {
+    .quizz-finish .quizz img,
+    .quizz-finish .background {
         max-width: 340px;
-    }
-
-    .close-questions {
-        width: 96%;
     }
 }
 
@@ -607,6 +591,9 @@ ion-icon {
     .quizz-result {
         width: 100vw;
         padding: 0 10px;
+    }
+    .quizz {
+        width: 94%;
     }
 }
 
@@ -627,5 +614,10 @@ ion-icon {
     .quizz-result-content span {
         font-size: 15px;
         width: 50%;
+    }
+    .quizz-finish .quizz img,
+    .quizz-finish .background {
+        max-width: 96%;
+        min-width: 200px;
     }
 }

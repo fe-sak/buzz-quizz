@@ -5,6 +5,7 @@ function createQuizz() {
     for (let i = 0; i < allInputs.length; i++) {
         allInputs[i].value = ""
     }
+    document.querySelector(".all-quizzes").classList.add("display-none")
     document.querySelector(".quizz-creation").classList.remove("display-none")
     document.querySelector(".basic-information-quizz").classList.remove("display-none")
 
@@ -128,7 +129,7 @@ function createQuestions(numberOfQuestions) {
             <div class="questions-informations display-none">
                 <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required>
                 <p class="display-none">A pergunta deve ter no mínimo 20 caracteres</p>
-                <input type="text" pattern="#+[A-Fa-f1-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
+                <input type="text" <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
                 <p class="display-none">A cor deve ser uma cor em hexadecimal</p>
                 <h2>Resposta correta</h2>
                 <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required>
@@ -387,6 +388,7 @@ function addUserCreatedQuizz(id) {
 }
 
 function goToHome() {
+    document.querySelector(".all-quizzes").classList.remove("display-none")
     document.querySelector(".quizz-finish").classList.add("display-none");
     document.querySelector(".quizz-creation").classList.add("display-none");
     document.querySelector(".quizz-container").remove();
@@ -420,7 +422,7 @@ function openQuizz(quizzId) {
                     <img src="${quizz.data.image}">`;
 
             document.querySelector(".quizz-container").innerHTML += `<div class="quizz-header-background"></div>`;
-            document.querySelector(".quizz-container").innerHTML += `<<div class="questions"></div>`;
+            document.querySelector(".quizz-container").innerHTML += `<div class="questions"></div>`;
 
             for (let i = 0; i < quizz.data.questions.length; i++) {
                 let answers = quizz.data.questions[i].answers;
