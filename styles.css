@@ -102,9 +102,10 @@ main {
     gap: 20px;
 }
 
-.user-quizzes > span {
+.user-quizzes>span {
     width: 94vw;
 }
+
 .quizz {
     position: relative;
     margin-bottom: 30px;
@@ -125,10 +126,9 @@ main {
     top: 9px;
     right: 0;
     background-color: #EC362D;
-
     border-radius: 18px 0px 0px 18px;
-
 }
+
 .quizz .background .buttons button {
     background-color: transparent;
     display: block;
