@@ -10,7 +10,7 @@ function createQuizz() {
     for (let i = 0; i < allInputs.length; i++) {
         allInputs[i].value = ""
     }
-
+    document.querySelector(".all-quizzes").classList.add("display-none")
     document.querySelector(".quizz-creation").classList.remove("display-none")
     document.querySelector(".basic-information-quizz").classList.remove("display-none")
 
@@ -26,7 +26,18 @@ function putQuizzes(answer) {
     let userCreatedQuizzId = JSON.parse(localStorage.getItem("userCreatedQuizzId"));
     document.querySelector(".loading-screen").classList.add("display-none");
 
-    if (userCreatedQuizzId.length > 0) document.querySelector(".user-quizzes-title").innerHTML += `<h2> Seus Quizzes</h2>`;
+    if (userCreatedQuizzId.length > 0) {
+        document.querySelector(".user-quizz-title").innerHTML +=
+            `
+        <h2> Seus Quizzes</h2>
+        <div class="new-create-quizz-button">
+        <ion-icon name="add-circle-sharp" onclick="createQuizz()"></ion-icon>
+        </div>
+        `;
+        document.querySelector(".create-quizz").classList.add("display-none");
+
+    }
+
     document.querySelector(".all-quizzes-title").innerHTML += `<h2> Todos os Quizzes</h2>`;
 
     const quizzes = answer.data
@@ -141,7 +152,7 @@ function createQuestions(numberOfQuestions) {
             <div class="questions-informations display-none">
                 <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required>
                 <p class="display-none">A pergunta deve ter no mínimo 20 caracteres</p>
-                <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
+                <input type="text" <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
                 <p class="display-none">A cor deve ser uma cor em hexadecimal</p>
                 <h2>Resposta correta</h2>
                 <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required>
@@ -333,6 +344,12 @@ function sendQuizzToServer() {
                 }
                 ]
             }
+            if (allDoneQuizz.questions[i].answer[3].text == "") {
+                allDoneQuizz.questions[i].answer.pop()
+            }
+            if (allDoneQuizz.questions[i].answer[2].text == "") {
+                allDoneQuizz.questions[i].answer.pop()
+            }
         }
 
 
@@ -346,6 +363,8 @@ function sendQuizzToServer() {
 
 
         }
+
+
         console.log(allDoneQuizz)
         document.querySelector(".loading-screen").classList.remove("display-none");
         promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", allDoneQuizz)
@@ -399,6 +418,7 @@ function addUserCreatedQuizz(id, key) {
 }
 
 function goToHome() {
+    document.querySelector(".all-quizzes").classList.remove("display-none")
     document.querySelector(".quizz-finish").classList.add("display-none");
     document.querySelector(".quizz-creation").classList.add("display-none");
     document.querySelector(".quizz-container").remove();
@@ -432,7 +452,7 @@ function openQuizz(quizzId) {
                     <img src="${quizz.data.image}">`;
 
             document.querySelector(".quizz-container").innerHTML += `<div class="quizz-header-background"></div>`;
-            document.querySelector(".quizz-container").innerHTML += `<<div class="questions"></div>`;
+            document.querySelector(".quizz-container").innerHTML += `<div class="questions"></div>`;
 
             for (let i = 0; i < quizz.data.questions.length; i++) {
                 let answers = quizz.data.questions[i].answers;
