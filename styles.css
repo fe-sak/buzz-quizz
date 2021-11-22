@@ -209,12 +209,13 @@ main {
     align-items: center;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
     position: relative;
+    overflow: hidden;
 }
 
 .quizz-header img {
     position: absolute;
     z-index: -1;
-    height: 227px;
+
     width: 100vw;
 }
 
