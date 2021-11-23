@@ -45,7 +45,7 @@ function putQuizzes(answer) {
         for (let i = 0; i < quizzes.length; i++) {
             document.querySelector(".all-quizzes").innerHTML +=
                 `
-                <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)">
+                <div class="quizz" id=${quizzes[i].id} onclick="openQuizz(this.id)" data-identifier="quizz-card">
                     <div class="background"></div>
                 <img src="${quizzes[i].image}">
                 <div class="title">
@@ -104,7 +104,7 @@ function putQuizzes(answer) {
             `
         <h2> Seus Quizzes</h2>
         <div class="new-create-quizz-button">
-        <ion-icon name="add-circle-sharp" onclick="createQuizz()"></ion-icon>
+        <ion-icon name="add-circle-sharp" onclick="createQuizz()" data-identifier="create-quizz"></ion-icon>
         </div>
         `;
         document.querySelector(".create-quizz").classList.add("display-none");
@@ -180,29 +180,29 @@ function createQuestions(numberOfQuestions) {
             quizzQuestions.innerHTML +=
                 `
             <div class="informations-input close">
-                <div class="close-questions" onclick="toggleInformations(this)">
+                <div class="close-questions" onclick="toggleInformations(this)" data-identifier="expand">
                     <h2>Pergunta ${i}</h2>
                     <ion-icon name="create-outline" class=""></ion-icon>
                 </div>
                 <div class="questions-informations display-none">
-                    <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required>
+                    <input type="text" minlength="20" placeholder="Texto da pergunta" id="question${i}" required data-identifier="question">
                     <p class="display-none">A pergunta deve ter no mínimo 20 caracteres</p>
-                    <input type="text" <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required>
+                    <input type="text" <input type="text" pattern="#+[A-Fa-f0-9]{6}" placeholder="Cor de fundo da pergunta" id="questionColor${i}" required data-identifier="question">
                     <p class="display-none">A cor deve ser uma cor em hexadecimal</p>
                     <h2>Resposta correta</h2>
-                    <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required>
+                    <input type="text" minlength="1" placeholder="Resposta correta" id="correctAnswer${i}" required data-identifier="question">
                     <p class="display-none">Resposta não pode estar em branco</p>
-                    <input type="url" pattern="https://.*" placeholder="URL da imagem" id="correctAnswerimg${i}" required>
+                    <input type="url" pattern="https://.*" placeholder="URL da imagem" id="correctAnswerimg${i}" required data-identifier="question">
                     <p class="display-none">O valor informado não é uma URL válida</p>
                     <h2>Respostas incorretas</h2>
-                    <input type="text" minlength="1" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}" required>
+                    <input type="text" minlength="1" placeholder="Resposta incorreta 1" id="wrongAnswer1${i}" required data-identifier="question">
                     <p class="display-none">Resposta não pode estar em branco</p>
-                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 1" id="wrongAnswer1img${i}" required>
+                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 1" id="wrongAnswer1img${i}" required data-identifier="question">
                     <p class="display-none">O valor informado não é uma URL válida</p>
-                    <input type="text" placeholder="Resposta incorreta 2" id="wrongAnswer2${i}">
-                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 2" id="wrongAnswer2img${i}">
-                    <input type="text" placeholder="Resposta incorreta 3" id="wrongAnswer3${i}">
-                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 3" id="wrongAnswer3img${i}">
+                    <input type="text" placeholder="Resposta incorreta 2" id="wrongAnswer2${i}" data-identifier="question">
+                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 2" id="wrongAnswer2img${i}" data-identifier="question">
+                    <input type="text" placeholder="Resposta incorreta 3" id="wrongAnswer3${i}" data-identifier="question">
+                    <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem 3" id="wrongAnswer3img${i}" data-identifier="question">
                 </div>  
             </div>
             `
@@ -280,6 +280,7 @@ function levelCreation() {
         document.querySelector(".quizz-questions").classList.remove("validate")
         document.querySelector(".quizz-questions").classList.add("display-none")
 
+
     } else {
         document.querySelector(".quizz-questions").classList.add("validate")
 
@@ -294,18 +295,18 @@ function levelCreation() {
             quizzLevels.innerHTML +=
                 `
                 <div class="informations-input close">
-                    <div class="close-questions" onclick="toggleInformations(this)">
+                    <div class="close-questions" onclick="toggleInformations(this)" data-identifier="expand">
                         <h2>Nível ${i}</h2>
                         <ion-icon name="create-outline" class=""></ion-icon>
                     </div>
                     <div class="levels-informations display-none">
-                        <input type="text" minlength="10" placeholder="Título do nível" id="levelTitle${i}" required>
+                        <input type="text" minlength="10" placeholder="Título do nível" id="levelTitle${i}" required data-identifier="level">
                         <p class="display-none">O título deve ter no mínimo 10 caracteres</p>
-                        <input type="text" pattern="^[1-9]?[0-9]{1}$|^100$" placeholder="% de acerto mínima" id="levelPercent${i}" required>
+                        <input type="text" pattern="^[1-9]?[0-9]{1}$|^100$" placeholder="% de acerto mínima" id="levelPercent${i}" required data-identifier="level">
                         <p class="display-none">O número deve estar entre 0-100</p>
-                        <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem do nível" id="levelimg${i}" required>
+                        <input class="url-img" type="url" pattern="https://.*" placeholder="URL da imagem do nível" id="levelimg${i}" required data-identifier="level">
                         <p class="display-none">O valor informado não é uma URL válida</p>
-                        <input type="text" minlength="30" placeholder="Descrição do nível" id="levelDescription${i}" required>
+                        <input type="text" minlength="30" placeholder="Descrição do nível" id="levelDescription${i}" required data-identifier="level">
                         <p class="display-none">A descrição deve ter no mínimo 30 caracteres</p>
                     </div>  
                 </div>
@@ -445,7 +446,7 @@ function sendQuizzToServer() {
 }
 
 function finishQuizz(serverAnswer) {
-
+    document.querySelector(".quizz-questions").classList.remove("validate")
     document.querySelector(".loading-screen").classList.add("display-none");
     document.querySelector(".quizz-levels").classList.add("display-none")
     document.querySelector(".quizz-finish").classList.remove("display-none")
