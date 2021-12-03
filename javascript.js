@@ -26,7 +26,7 @@ function putQuizzes(answer) {
     let userCreatedQuizzesId = [];
 
     userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
-    console.log(userCreatedQuizzes.length);
+
     for (let i = 0; i < userCreatedQuizzes.length; i++) {
         userCreatedQuizzesId.push(userCreatedQuizzes[i].id);
     }
@@ -377,25 +377,25 @@ function sendQuizzToServer() {
                 title: document.getElementById(`question${i + 1}`).value,
                 color: document.getElementById(`questionColor${i + 1}`).value,
                 answers: [{
-                    text: document.getElementById(`correctAnswer${i + 1}`).value,
-                    image: document.getElementById(`correctAnswerimg${i + 1}`).value,
-                    isCorrectAnswer: true
-                },
-                {
-                    text: document.getElementById(`wrongAnswer1${i + 1}`).value,
-                    image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: document.getElementById(`wrongAnswer2${i + 1}`).value,
-                    image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: document.getElementById(`wrongAnswer3${i + 1}`).value,
-                    image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
-                    isCorrectAnswer: false
-                }
+                        text: document.getElementById(`correctAnswer${i + 1}`).value,
+                        image: document.getElementById(`correctAnswerimg${i + 1}`).value,
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: document.getElementById(`wrongAnswer1${i + 1}`).value,
+                        image: document.getElementById(`wrongAnswer1img${i + 1}`).value,
+                        isCorrectAnswer: false
+                    },
+                    {
+                        text: document.getElementById(`wrongAnswer2${i + 1}`).value,
+                        image: document.getElementById(`wrongAnswer2img${i + 1}`).value,
+                        isCorrectAnswer: false
+                    },
+                    {
+                        text: document.getElementById(`wrongAnswer3${i + 1}`).value,
+                        image: document.getElementById(`wrongAnswer3img${i + 1}`).value,
+                        isCorrectAnswer: false
+                    }
                 ]
             }
             if (allDoneQuizz.questions[i].answers[3].text == "") {
@@ -675,11 +675,7 @@ function getQuizzInformation(answer) {
 
     isEdit = true;
     createQuizz();
-
-
-
 }
-
 
 function deleteQuizz(button) {
     userCreatedQuizzes = JSON.parse(localStorage.getItem("userCreatedQuizzes"));
@@ -691,31 +687,26 @@ function deleteQuizz(button) {
         if (id == userCreatedQuizzes[i].id) key = userCreatedQuizzes[i].key
     }
 
-    console.log(key);
+
 
     if (window.confirm("Deseja deletar este quizz? Esta ação não pode ser desfeita")) {
         axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {
-            headers: {
-                "Secret-Key": key,
-            }
-        })
+                headers: {
+                    "Secret-Key": key,
+                }
+            })
             .then(() => {
-                console.log(userCreatedQuizzes);
+
                 for (let i = userCreatedQuizzes.length - 1; i >= 0; i--) {
                     if (userCreatedQuizzes[i].id == id) {
-                        console.log("if");
+
                         userCreatedQuizzes.splice(i, 1);
                         localStorage.setItem("userCreatedQuizzes", JSON.stringify(userCreatedQuizzes));
-                        console.log(localStorage.getItem("userCreatedQuizzes"));
                     }
 
                 }
 
                 getAllQuizzes();
             })
-            .catch((error) => {
-                console.log(error);
-            }
-            );
     }
 }
